@@ -1,0 +1,225 @@
+// драфт
+
+Intro:
+
+	"You vaguely remember what you were doing before this."
+	"You were planning to finally fix the damn car and leave these remnants of life in the dust clouds."
+	"But then, a dense fog descended on the city."
+
+	(Show image - "narrative/phone_2")
+
+	"Phone: *crackling*"
+	"Phone: The suitcase. It's under your bed. There's an address on it. Deliver it."
+	"Phone: Understood?"
+
+	Choices:
+
+		"Since when am I a courier?"
+			"Phone: Everyone gets what they deserve."
+
+		"How did I get a suitcase under my bed?"
+			"Phone: It's always been there."
+			"Phone: *crackling*"
+			"Phone: Now you just see it."
+
+		"Um, okay? But why do I need this?"
+			"Phone: Deliver everything on time - and your dream will come true."
+
+			"Phone: *crackling*"
+			"Phone: laughs"
+			"Phone: No, you don't deserve that kind of dream."
+			"Phone: You don't deserve happiness."
+			"Phone: *crackling*"
+			"Phone: But you can get some peace."
+			"Phone: The engine will roar again. You'll be able to leave."
+			"Phone: beeps"
+
+Delivery0:
+
+	"Hello?"
+	"There's, uhm a delivery for you..."
+
+	(Show image - "narrative/professor")
+
+	"What!? Who are you!"
+	"You are not one of them?! Don't you?"
+
+	Choices:
+		"One of who?"
+			"Then why are you here!?"
+		"No, I am not"
+			"Then why are you here!?"
+			"You're not supposed to be here..."
+		"Just give him the package"
+
+	"I have a package for you."
+	"W- What?"
+
+	(Hide image)
+
+	"After you close the door - you hear a loud explosion."
+	"Is it salvation you delivered, or is it something else?"
+
+Delivery1:
+
+	"You open the doors of the mansion and see Lieutenant Redcliff."
+	"He's wearing the uniform that you wouldn't mistake for anything else, it smells of the jungle, napalm, and inhumanity."
+	"Oh, it's you, John?"
+	"You're surprised to find out that the gunshot that tore apart the Lieutenant's face doesn't prevent him from speaking."
+	"Did you bring my order? Is Freedom waiting for me? By the way, there should be enough for you too, since you're with me, private."
+
+	Choices:
+		"Give him full shotgun"
+		"Give him shotgun with 1 bullet"
+		"Do not give him shotgun"
+
+	"Ah, freedom again!"
+
+	(Hide image)
+
+	"After you close the door - you hear a loud explosion."
+	"Is it salvation you delivered, or is it something else?"
+
+Delivery2:
+
+	"You approach a neat one-story house surrounded by fields of blooming flowers."
+	"The house itself is covered in thorns that pierce your soul, reaching deep into your heart."
+
+	(Show image - "narrative/woman")
+
+	"She opens the door, her light greeting getting lost in a coughing fit."
+
+	(Show image - "narrative/woman_and_man")
+
+	"He runs up to her. "Don't worry, my dear, I'll take care of everything.""
+	""Oh, John. Have you finished wasting your time on madness and decided to show some care?""
+	""I hope this new skill will be useful to you. But here, I taking care of her for a long time, give me the medicine and leave.""
+
+	Choices:
+		"Give him full vial"
+		"Give him 2/3 vial"
+		"Give him 1/3 vial"
+		"Do not give him vial"
+
+	"Here darling, take this, its new and experimental, it will totally help this time, I promise."
+	"And for the love of good, stop stressing about this bloody delivery boy, or you get worse!"
+	"Silent coughs are still heard after you closed the door"
+	"Was the label a lie? Do you feel your heart cured now?"
+
+	(Hide image)
+
+Delivery3:
+
+	"You come to the most polished square building in the block. All the lawns around are aligned with the ruler, and perhaps even painted green."
+	"The doors are opened by Sergeant Calibi. His smile knows no bounds. He smiled the same way when he recruited you."
+
+	(Show image - "narrative/sergeant")
+
+	"Oh, John! You finally got there! Incredibly happy! The fact that you came here will help us a lot to create a positive image of our armed forces."
+	"We can't even put into words how grateful we are for your service!"
+	"Did you bring the uniform? Give it here!"
+
+	Choices:
+		"Give him the uniform"
+		"Give him the damaged uniform"
+		"Do not give him the uniform"
+
+	"Without reducing the brightness of his smile, Calibi opens some kind of window in the wall. Behind it, the fire of the crematorium roars furiously."
+	"He tosses the uniform in there, then takes a half step to the side and points to the door with an inviting gesture."
+	"Come on John, get in, the best thing you can do in civilian life for our brilliant troops!"
+	"What are you waiting?"
+
+	(Hide image)
+
+Delivery4:
+
+	"You're approaching... Did you make a circle? The house is identical to yours. A familiar smell hits your nose, only reminding you of despair."
+	"You climb this familiar staircase, instinctively stepping over a loose step. You should have fixed it a long time ago."
+	"You knock on the scorched door with your number on it. Darkness opens the door."
+
+	(Show image - "narrative/darkness")
+
+	"Darkness: crackling"
+	"Darkness: Wow, you really made it."
+	"Darkness: crackling"
+	"Darkness: I hope you didn't eat them."
+	"Darkness: Give them here. Understood?"
+
+	Choices:
+	"You are me?"
+		"Darkness: Wrong guess. You are me."
+		"Darkness: But you need to stop it right away."
+	"Why are you torturing me?"
+		"Darkness: Because life is pain."
+		"Darkness: crackling"
+		"Darkness: And if you didn't bring the pills, then I will also break your hand."
+		"Darkness: Well Intentioned."
+	"Give an incomplete pack of pills"
+		"Darkness: You tasted them, you fool."
+		"Darkness: But not much is missing either."
+		"Darkness: crackling"
+		"Darkness: It means there is hope."
+		"Darkness: Protect yourself."
+	"Give pills"
+
+	"Darkness: Yes, leave these nonsense here in the dark."
+	"Darkness: And break out of here. Live."
+
+	"You quickly run away from your own house - and see your car on the street."
+	"Turn of the key - and the engine explodes with a roar, making the whole car shake with anticipation."
+	"There is nothing holding you back in this city. There's no point in dying here."
+	"You press the pedal, and the streets and houses merge into indistinguishability."
+	"You break through the fog, and only from afar, the darkness watches with a grin."
+
+Outro:
+
+	"Voice: Three cc of adrenaline, now."
+	"Voice: Brain functions stabilized, dynamics online."
+	"You feel a very distant touch, as if you were touched through a hundred quilts."
+	"Voice: Are you still a fighter, John? I'm glad you got out in the end."
+
+	(Scene transition to "credits_screen")
+
+// гг мертв находится в лимбо
+
+// 	в реальности гг находится в реанимации
+//	что на самом деле происходит это загадка для игрока, должно быть 2 варианта между которыми происходит шифт.
+
+//	вопросы которые игрок может думать.
+
+		0. кто такой гг 							// предметы
+		1. гг в аду									// гг встречает ангела / дьявола?
+		2. гг в раю									// 
+		3. гг вообще жив?							// 
+		4. гг хороший или плохой человек? 			// 
+		5. гг солдат?								// 
+		6. гг был женат?							// 
+		7. гг не любит детей?						//
+		8. гг употреблял наркотики?					//
+
+//	старт надо обозначить сильней.
+//	кринжатину убрать, ну пизда.
+//	концовка должна быть четко обозначена, должно быть понятно что он проснулся на операционном столе
+//	каждый деливери должен быть сюрприз, типа мы закладываем ожидания, кого или что мы встретим. в итоге происходит что то другое
+//	
+
+//	доп эвенты для атмосферы сайлент хилле
+
+	1. "Вы нашли вендинг машины"   													// нужно обыграть атмосферу
+	2. "Вы нашли жертвенный круг"
+	3. "Вы проходите через кладбище, нашли вырытую могилу с вашим именем"			// поспать в ней, банально но...
+	4. "Вы находите цветочек"
+	5. "Вы находите книжку, пытаетесь ее прочитать, но текст написан зеркально"
+
+//		способы доставки нарратива
+//  - тип эвента - - - - - - - крутость
+
+	1. "Алерт"					*
+	2. "Эвент - 2 строчки"		*
+	3. "Текст эвент с выбором"	*
+	4. "Предметы и их описания"	***
+	5. "Катсцена"				**
+	6. "Фразы врагов"			**
+	7. "Дизайн врагов"			***
+	8. "Дизайн окружения"		*** // у меня его правда нет, но есть вариант 'текстового дизайна окружения', т.е. локации что посещает гг
+	9. "Замок - ключ"			**  // можно выдавать сначала предмет, потом давать его использовать как ключ на выбор

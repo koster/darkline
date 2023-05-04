@@ -1,0 +1,43 @@
+
+Intro:
+
+	"You vaguely remember what you were doing before this."
+	"You were planning to finally fix the damn car and leave these remnants of life in the dust clouds."
+	"But then, a dense fog descended on the city."
+
+	(Show image - "narrative/phone_2")
+
+	"Phone: *crackling*"
+	"Phone: The suitcase. It's under your bed. There's an address on it. Deliver it."
+	"Phone: Understood?"
+
+	Choices:
+
+		"Since when am I a courier?"
+			"Phone: Everyone gets what they deserve."
+
+		"How did I get a suitcase under my bed?"
+			"Phone: It's always been there."
+			"Phone: *crackling*"
+			"Phone: Now you just see it."
+
+		"Um, okay? But why do I need this?"
+			"Phone: Deliver everything on time - and your dream will come true."
+
+			"Phone: *crackling*"
+			"Phone: laughs"
+			"Phone: No, you don't deserve that kind of dream."
+			"Phone: You don't deserve happiness."
+			"Phone: *crackling*"
+			"Phone: But you can get some peace."
+			"Phone: The engine will roar again. You'll be able to leave."
+			"Phone: beeps"
+
+Intro:
+
+	*beep beep beep beep* (heart monitor sound)
+
+	White background
+
+	Music (Haa-haa-haa?)
+
