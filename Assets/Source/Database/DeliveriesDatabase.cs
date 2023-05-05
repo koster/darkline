@@ -4,6 +4,12 @@ using Source.Util;
 
 namespace Source.Game.Deliveries
 {
+    public enum DeliveryFeature
+    {
+        CAR_AT_THE_START,
+        CAR_AT_THE_END
+    }
+    
     public class DeliveryTimelinePoint
     {
         public int at;
@@ -15,10 +21,12 @@ namespace Source.Game.Deliveries
         public InventoryItemDefinition item;
         public int length;
         public List<DeliveryTimelinePoint> timeline;
-        public DeliveryTimelinePoint finalPoint;
+        public Func<GameQueue.GameQueue> introPoint;
+        public Func<GameQueue.GameQueue> finalPoint;
         public float scavengingChance = 0.75f;
         public int dangerTime = 100;
         public List<Func<GameQueue.GameQueue>> dangerLadder;
+        public List<DeliveryFeature> features = new List<DeliveryFeature>();
     }
 
     public static class DeliveriesDatabase
@@ -30,21 +38,24 @@ namespace Source.Game.Deliveries
             var delivery0 = new DeliveryDefinition  // tutorial - survival
             {
                 item = ItemDatabase.suitcase,
-                length = 5,
+                length = 7,
                 dangerTime = 200,
+                features = new List<DeliveryFeature>()
+                {
+                    DeliveryFeature.CAR_AT_THE_START
+                },
                 timeline = new List<DeliveryTimelinePoint>
                 {
-                    new() { at = 1, queue = Story_Tutorial.Hunger },
-                    new() { at = 3, queue = Story_Atmosphere.all.GetRandom() }
+                    new() { at = 1, queue = Story_Tutorial.Painkillers },
+                    new() { at = 3, queue = Story_Atmosphere.all.GetRandom() },
+                    new() { at = 4, queue = Story_Tutorial.WhatIsThisPlace },
+                    new() { at = 6, queue = Story_Tutorial.Lunch }
                 },
-                finalPoint = new DeliveryTimelinePoint
-                {
-                    queue = Story_Main.Delivery0
-                }
+                finalPoint = Story_Main.Delivery0_Doctor
             };
             var delivery1 = new DeliveryDefinition // tutorial - combat
             {
-                item = ItemDatabase.shotgun,
+                item = ItemDatabase.powder,
                 length = 10,
                 dangerLadder = new List<Func<GameQueue.GameQueue>>
                 {
@@ -72,7 +83,7 @@ namespace Source.Game.Deliveries
                     new()
                     {
                         at = 4,
-                        queue = Story_Atmosphere.FindPlank
+                        queue = Story_Tutorial.FindPlank
                     },
                     new()
                     {
@@ -85,15 +96,14 @@ namespace Source.Game.Deliveries
                         queue = Story_Atmosphere.SomeoneIsLooking
                     }
                 },
-                finalPoint = new DeliveryTimelinePoint
-                {
-                    queue = Story_Main.Delivery1
-                }
+                introPoint = Story_Main.Delivery1_WifeIntro,
+                finalPoint = Story_Main.Delivery1_WifeOutro
             };
             var delivery2 = new DeliveryDefinition // enemy bleeding
             {
-                item = ItemDatabase.powder,
+                item = ItemDatabase.shotgun,
                 length = 12,
+                features = new List<DeliveryFeature> { DeliveryFeature.CAR_AT_THE_START },
                 dangerLadder = new List<Func<GameQueue.GameQueue>>
                 {
                     CombatDatabase.Danger_CombatBleeder,
@@ -138,10 +148,8 @@ namespace Source.Game.Deliveries
                         queue = ScavengingEventsDatabase.all.GetRandom()
                     }
                 },
-                finalPoint = new DeliveryTimelinePoint
-                {
-                    queue = Story_Main.Delivery2
-                }
+                introPoint = Story_Main.Delivery2_FriendIntro,
+                finalPoint = Story_Main.Delivery2_FriendOutro
             };
             var delivery3 = new DeliveryDefinition
             {
@@ -177,7 +185,7 @@ namespace Source.Game.Deliveries
                     new()
                     {
                         at = 5,
-                        queue = Story_Atmosphere.FindKnife
+                        queue = Story_Tutorial.FindKnife
                     },
                     new()
                     {
@@ -190,10 +198,7 @@ namespace Source.Game.Deliveries
                         queue = ScavengingEventsDatabase.all.GetRandom()
                     }
                 },
-                finalPoint = new DeliveryTimelinePoint
-                {
-                    queue = Story_Main.Delivery3
-                }
+                finalPoint = Story_Main.Delivery3_Military
             };
             all.Add(delivery0);
             var delivery4 = new DeliveryDefinition
@@ -210,7 +215,7 @@ namespace Source.Game.Deliveries
                     new()
                     {
                         at = 1,
-                        queue = Story_Atmosphere.FindPistol
+                        queue = Story_Tutorial.FindPistol
                     },
                     new()
                     {
@@ -238,10 +243,7 @@ namespace Source.Game.Deliveries
                         queue = RandomEventsDatabase.all.GetRandom()
                     }
                 },
-                finalPoint = new DeliveryTimelinePoint
-                {
-                    queue = Story_Main.Delivery4
-                }
+                finalPoint = Story_Main.Delivery4_Self
             };
             all.Add(delivery1);
             all.Add(delivery2);

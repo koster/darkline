@@ -119,7 +119,7 @@ public class NarrativeBoxUI : UILayerItemBase
             if (!skip)
             {
                 if (everyOther % 2 == 0)
-                    "sound/MidVoice_2".PlayClip(0.25f);
+                    textContext.text.GetCharacter().voice.PlayClip(0.25f);
                 everyOther++;
 
                 yield return new WaitForSeconds(charCooldown);
@@ -153,6 +153,7 @@ public class NarrativeBoxUI : UILayerItemBase
     public static void Close()
     {
         i.gameObject.SetActive(false);
+        i.canvasGroup.alpha = 0;
     }
 
     public static void Restore()

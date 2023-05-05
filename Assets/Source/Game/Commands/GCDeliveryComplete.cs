@@ -10,9 +10,9 @@ public class GCDeliveryComplete : QueueItemBase
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "delivery_" + Game.world.deliveryIndex);
         Game.world.inventory.TakeAll(Game.world.delivery.definition.item);
 
-        subqueue.Add(new GCQueue(Game.world.delivery.definition.finalPoint.queue()));
-        subqueue.Add(new GCDeliveryCompletedAnnouncement());
-        subqueue.Add(new GCCall(() => { Game.world.deliveryIndex++; }));
+        subqueue.Add(new GCQueue(Game.world.delivery.definition.finalPoint?.Invoke()));
+        subqueue.Add(new GCDeliveryCompletedAnnouncement(Game.world.deliveryIndex));
+        subqueue.Add(new GCAddItem(ItemDatabase.ambrosia, 1));
         subqueue.Add(new GCCall(Complete));
     }
 

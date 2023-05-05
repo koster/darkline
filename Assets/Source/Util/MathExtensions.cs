@@ -35,5 +35,12 @@ namespace Source.Util
         {
             return v[Random.Range(0, v.Count)];
         }
+        
+        public static T GetSafely<T>(this List<T> v, int n)
+        {
+            if (v.Count == 0)
+                return default(T);
+            return v[Mathf.Clamp(n, 0, v.Count - 1)];
+        }
     }
 }

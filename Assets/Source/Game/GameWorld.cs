@@ -17,9 +17,9 @@ public class GameWorld
 
     public void NewGame()
     {
-        player.SetStat(EnumPlayerStats.HEALTH, 100, silent: true);
+        player.SetStat(EnumPlayerStats.HEALTH, 40, silent: true);
         player.SetStat(EnumPlayerStats.MENTAL, 100, silent: true);
-        player.SetStat(EnumPlayerStats.HUNGER, 20, silent: true);
+        player.SetStat(EnumPlayerStats.HUNGER, 60, silent: true);
         player.SetStat(EnumPlayerStats.THIRST, 100, silent: true);
         player.SetStat(EnumPlayerStats.STAMINA, 100, silent: true);
 
@@ -30,7 +30,7 @@ public class GameWorld
         player.SetMaxValue(EnumPlayerStats.STAMINA, 100);
 
         inventory.Give(ItemDatabase.waterBottle, 2);
-        inventory.Give(ItemDatabase.burger, 2);
+        inventory.Give(ItemDatabase.painkillers, 1);
 
         inventory.Give(ItemDatabase.fist, 1);
 
@@ -59,7 +59,7 @@ public class GameWorld
 
         UIState.DoState(UI_STATES.NOTHING);
 
-        // Game.world.deliveryIndex = 1;
+        Game.world.deliveryIndex = 2;
 
         // #if UNITY_EDITOR
         //
@@ -68,7 +68,8 @@ public class GameWorld
         //
         // #endif
         
-        Game.contextQueue.Add(new GCQueue(Story_Main.Intro()));
+        // Game.contextQueue.Add(new GCQueue(Story_Main.Delivery0()));
+        // Game.contextQueue.Add(new GCQueue(Story_Main.Intro()));
 
         // Game.contextQueue.Add(new GCQueue(Story_Deliveries.Delivery_04()));
         // Game.contextQueue.Add(new GCQueue(Story_Atmosphere.FindKnife()));
@@ -87,18 +88,20 @@ public class Tutorial
 
 public class GCSound : QueueItemBase
 {
-    readonly string s;
+    readonly string _sound;
+    float _vol;
 
-    public GCSound(string soundCreepyAmbient)
+    public GCSound(string sfx, float vol = 1f)
     {
-        s = soundCreepyAmbient;
+        _vol = vol;
+        _sound = sfx;
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        s.PlayClip();
+        _sound.PlayClip(_vol);
         Complete();
     }
 }

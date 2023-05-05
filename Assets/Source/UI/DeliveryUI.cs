@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Source.Game.Deliveries;
 using Source.Util;
 using TMPro;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class DeliveryUI : MonoBehaviour
     static DeliveryUI i;
 
     public Image vignette;
-    
+    public GameObject car;
     public Animator character;
     public Transform town;
 
@@ -36,6 +37,7 @@ public class DeliveryUI : MonoBehaviour
     public static void Hide()
     {
         i.gameObject.SetActive(false);
+        i.UpdateProps();
     }
 
     public static void Show()
@@ -47,7 +49,9 @@ public class DeliveryUI : MonoBehaviour
     {
         if (Game.world.delivery.definition == null)
             return;
-        
+
+        UpdateProps();
+
         slider.value = (float)Game.world.delivery.position / Game.world.delivery.definition.length;
         danger.value = ((float)Game.world.player.GetStat(EnumPlayerStats.TIME)/Game.world.delivery.definition.dangerTime).C01();
         humm.volume = danger.value;
@@ -70,9 +74,17 @@ public class DeliveryUI : MonoBehaviour
         }
     }
 
+    void UpdateProps()
+    {
+        var definition = DeliveriesDatabase.all.GetSafely(Game.world.deliveryIndex);
+        var hasCar = definition.features.Contains(DeliveryFeature.CAR_AT_THE_START);
+        car.gameObject.SetActive(hasCar);
+    }
+
     public static void Reset()
     {
         i.position = 0;
         i.town.transform.position = Vector3.zero;
+        i.UpdateProps();
     }
 }

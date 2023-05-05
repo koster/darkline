@@ -13,6 +13,7 @@ public class Main : MonoBehaviour
         Story_Atmosphere.Initialize();
         CombatDatabase.Initialize();
         RandomEventsDatabase.Initialize();
+        CharacterDatabase.Initialize();
         
         DeliveriesDatabase.Initialize();
         

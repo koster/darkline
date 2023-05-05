@@ -63,6 +63,7 @@ public static class ItemDatabase
     public static InventoryItemDefinition bandage;
     public static InventoryItemDefinition waterBottle;
     public static InventoryItemDefinition burger;
+    public static InventoryItemDefinition lunch;
     public static InventoryItemDefinition comic;
     public static InventoryItemDefinition cannedCoffee;
     public static InventoryItemDefinition medkit;
@@ -71,6 +72,7 @@ public static class ItemDatabase
     public static InventoryItemDefinition vape;
     public static InventoryItemDefinition energyDrink;
     public static InventoryItemDefinition tranquilizers;
+    public static InventoryItemDefinition painkillers;
     public static InventoryItemDefinition monsterMeat;
     public static InventoryItemDefinition demonBlood;
     public static InventoryItemDefinition psychedelics;
@@ -185,7 +187,7 @@ public static class ItemDatabase
         vape = all.New();
         vape.name = "Vape";
         vape.icon = "items/vape".LoadSprite();
-        vape.desc = "Adds 40 mental but reduces 10 health";
+        vape.desc = "A compact, modern electronic vaporizer emitting a faint, sweet-smelling mist. Its calming effects offer a momentary escape from the nightmarish world you're trapped in. Adds 40 mental but reduces 10 health.";
         vape.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You take a hit from your vape. It makes you feel better."))
             .Add(new GCAddStat(EnumPlayerStats.MENTAL, 40, AddStatMode.FLOAT_TEXT_ALERT))
@@ -241,6 +243,15 @@ public static class ItemDatabase
             .Add(new GCNarrative("You take some tranquilizers. You start feeling relaxed and your wounds heal."))
             .Add(new GCAddStat(EnumPlayerStats.HEALTH, 40, AddStatMode.FLOAT_TEXT_ALERT))
             .Add(new GCAddStat(EnumPlayerStats.MENTAL, 20, AddStatMode.FLOAT_TEXT_ALERT));
+
+        painkillers = all.New();
+        painkillers.name = "Painkillers";
+        painkillers.icon = "items/painkillers".LoadSprite();
+        painkillers.desc = "A bottle of potent pain-relieving tablets. In a place filled with suffering and torment, these small pills provide a fleeting respite from the relentless pain. ";
+        painkillers.stackable = true;
+        painkillers.OnUse = () => new GameQueue()
+            .Add(new GCNarrative("You take some painkillers. You start feeling relaxed and your pain numbs."))
+            .Add(new GCAddStat(EnumPlayerStats.HEALTH, 40, AddStatMode.FLOAT_TEXT_ALERT));
     }
 
     static void Food()
@@ -252,6 +263,17 @@ public static class ItemDatabase
         burger.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You take a bite of the burger. It's juicy and delicious."))
             .Add(new GCAddStat(EnumPlayerStats.HUNGER, 30, AddStatMode.FLOAT_TEXT_ALERT));
+        
+        lunch = all.New();
+        lunch.name = "Lunch";
+        lunch.icon = "items/lunch".LoadSprite();
+        lunch.desc = "A simple, crumpled brown paper bag containing a humble meal. Though unassuming, the familiar flavors bring a sense of normalcy and comfort amidst the chaos. Restores 30 hunger and provides a slight boost to mental well-being.";
+        lunch.OnUse = () => new GameQueue()
+            .Add(new GCNarrative("Lunch is still warm and tasty."))
+            .Add(new GCNarrative("You find a little note inside."))
+            .Add(new GCNarrative("\"I love you <3\""))
+            .Add(new GCAddStat(EnumPlayerStats.HUNGER, 50, AddStatMode.FLOAT_TEXT_ALERT))
+            .Add(new GCAddStat(EnumPlayerStats.MENTAL, 5, AddStatMode.FLOAT_TEXT_ALERT));
 
         mushrooms = all.New();
         mushrooms.name = "Mushrooms";
@@ -363,7 +385,7 @@ public static class ItemDatabase
         shotgun = all.New();
         shotgun.name = "Shotgun";
         shotgun.icon = "items/shotgun".LoadSprite();
-        shotgun.desc = "It looks oddly familiar, and tip of the barrel is rusty from blood. There is name of weapon scribed on a side \"salvation\".";
+        shotgun.desc = "It looks oddly familiar, and tip of the barrel is rusty from blood. There is name of weapon scribed on one side \"Salvation\" and the initials of the owner 'L.R.' on the other.";
 
         powder = all.New();
         powder.name = "Powder";

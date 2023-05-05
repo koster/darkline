@@ -63,4 +63,16 @@ public class NarrativeImageUI : MonoBehaviour
             i.gameObject.SetActive(false);
         });
     }
+
+    public static void Tint(Color color, float time)
+    {
+        if (time == 0)
+        {
+            i.narrativeBackground.color = color;
+        }
+        else
+        {
+            i.narrativeBackground.DOColor(color, time);
+        }
+    }
 }

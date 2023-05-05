@@ -18,6 +18,9 @@ public class GCAcceptDelivery : QueueItemBase
         
         Game.world.player.SetStat(EnumPlayerStats.TIME, 0);
 
+        if (currentDelivery.introPoint != null)
+            subqueue.Add(new GCQueue(currentDelivery.introPoint?.Invoke()));
+        
         if (!Game.world.inventory.HasItem(currentDelivery.item))
             Game.world.inventory.Give(currentDelivery.item, 1);
         
