@@ -137,5 +137,11 @@ namespace Source.Game.Deliveries
             lastModel.doesNotExit = true;
             return this;
         }
+
+        public GCChoices ConditionFact(params string[] fact)
+        {
+            lastModel.condition.all_facts.AddRange(fact);
+            return this;
+        }
     }
 }

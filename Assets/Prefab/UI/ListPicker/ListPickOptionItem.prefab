@@ -282,6 +282,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   label: {fileID: 4385035736613045086}
+  isMain: {fileID: 0}
+  background: {fileID: 7155505344494406468}
   highlight: {fileID: 1958390221123860067}
   pushHight: {fileID: 1023703152032936986}
 --- !u!1 &9035847360383167110

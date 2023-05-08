@@ -101,7 +101,7 @@ namespace Source.Game.Deliveries
             };
             var delivery2 = new DeliveryDefinition // enemy bleeding
             {
-                item = ItemDatabase.shotgun,
+                item = ItemDatabase.letter,
                 length = 12,
                 features = new List<DeliveryFeature> { DeliveryFeature.CAR_AT_THE_START },
                 dangerLadder = new List<Func<GameQueue.GameQueue>>
@@ -198,12 +198,13 @@ namespace Source.Game.Deliveries
                         queue = ScavengingEventsDatabase.all.GetRandom()
                     }
                 },
-                finalPoint = Story_Main.Delivery3_Military
+                introPoint = Story_Main.Delivery3_MilitaryIntro,
+                finalPoint = Story_Main.Delivery3_MilitaryOutro
             };
             all.Add(delivery0);
             var delivery4 = new DeliveryDefinition
             {
-                item = ItemDatabase.pills,
+                item = ItemDatabase.blood,
                 length = 12,
                 dangerLadder = new List<Func<GameQueue.GameQueue>>
                 {
@@ -243,7 +244,8 @@ namespace Source.Game.Deliveries
                         queue = RandomEventsDatabase.all.GetRandom()
                     }
                 },
-                finalPoint = Story_Main.Delivery4_Self
+                introPoint = Story_Main.Delivery4_SelfIntro,
+                finalPoint = Story_Main.Delivery4_SelfOutro
             };
             all.Add(delivery1);
             all.Add(delivery2);

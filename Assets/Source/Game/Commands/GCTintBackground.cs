@@ -1,3 +1,4 @@
+using Source.GameQueue;
 using UnityEngine;
 
 namespace Source.Game.Deliveries
@@ -6,6 +7,7 @@ namespace Source.Game.Deliveries
     {
         readonly Color color;
         readonly float time;
+        bool _solid = false;
 
         public GCTintBackground(Color clr, float time)
         {
@@ -16,13 +18,15 @@ namespace Source.Game.Deliveries
         public override void Enter()
         {
             base.Enter();
-
+            
+            if (_solid)
+                NarrativeImageUI.Solid();
+            
             NarrativeImageUI.Tint(color, time);
 
-            if (time==0)
+            if (time > 0)
                 subqueue.Add(new GCWait(time));
             subqueue.Add(new GCCall(Complete));
-
         }
 
         public override void Update()
@@ -31,6 +35,12 @@ namespace Source.Game.Deliveries
 
             if (subqueue.IsEmpty())
                 Complete();
+        }
+
+        public IQueueItem Solid()
+        {
+            _solid = true;
+            return this;
         }
     }
 }

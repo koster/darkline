@@ -1,4 +1,7 @@
+using System;
+using GameAnalyticsSDK;
 using Source.Game.Deliveries;
+using TMPro;
 using UnityEngine;
 
 public class Main : MonoBehaviour
@@ -7,6 +10,8 @@ public class Main : MonoBehaviour
 
     void Start()
     {
+        GameAnalytics.Initialize();
+        
         EnemyDatabase.Initialize();
         ItemDatabase.Initialize();
         ScavengingEventsDatabase.Initialize();
@@ -24,5 +29,13 @@ public class Main : MonoBehaviour
     void FixedUpdate()
     {
         game.Tick();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Game.world.delivery.position = Game.world.delivery.definition.length - 1;
+        }
     }
 }

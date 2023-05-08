@@ -4,6 +4,7 @@ using Source.Commands;
 using Source.GameQueue;
 using Source.Util;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class InventoryItemDefinition
 {
@@ -51,7 +52,9 @@ public static class ItemDatabase
     public static InventoryItemDefinition roses;
     public static InventoryItemDefinition suitcase;
     public static InventoryItemDefinition shotgun;
+    public static InventoryItemDefinition letter;
     public static InventoryItemDefinition powder;
+    public static InventoryItemDefinition blood;
     
     //
     
@@ -179,7 +182,8 @@ public static class ItemDatabase
         shovel.weaponAction.attackAction = (item, enemy) => new GameQueue()
             .Add(new GCSound("sound/combat/swing3"))
             .Add(new GCNarrative($"You swing the shovel at the {enemy.definition.name}!"))
-            .Add(new GCCombatDealDamage(item, enemy, 125));
+            .Add(new GCCombatStunChance(enemy, 1f))
+            .Add(new GCCombatDealDamage(item, enemy, 25));
     }
 
     static void Drugs()
@@ -196,7 +200,7 @@ public static class ItemDatabase
         cocaine = all.New();
         cocaine.name = "Cocaine";
         cocaine.icon = "items/cocaine".LoadSprite();
-        cocaine.desc = "Restores 100 stamina, stamina doesn't deplete for the next 30 minutes, reduces 50 thirst";
+        cocaine.desc = "A dangerous, illicit substance known for its potent, short-lived effects. When consumed, it provides a temporary surge of energy and heightened focus, but the consequences can be severe.";
         cocaine.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You take a hit of cocaine. Your energy levels skyrocket and you feel unstoppable."))
             .Add(new GCAddStat(EnumPlayerStats.STAMINA, 100, AddStatMode.FLOAT_TEXT_ALERT))
@@ -206,7 +210,7 @@ public static class ItemDatabase
         psychedelics = all.New();
         psychedelics.name = "Psychedelics";
         psychedelics.icon = "items/psychedelics".LoadSprite();
-        psychedelics.desc = "Restores 30 mental, increases thirst by 50";
+        psychedelics.desc = "A small bag of colorful, hallucinogenic tablets. In a world that already challenges the boundaries of reality, consuming these may either provide insight or plunge you further into madness. Effects unpredictable.";
         psychedelics.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You take the psychedelics. Your mind opens up, but you start to feel thirsty."))
             .Add(new GCAddStat(EnumPlayerStats.MENTAL, 30, AddStatMode.FLOAT_TEXT_ALERT))
@@ -387,20 +391,30 @@ public static class ItemDatabase
         shotgun.icon = "items/shotgun".LoadSprite();
         shotgun.desc = "It looks oddly familiar, and tip of the barrel is rusty from blood. There is name of weapon scribed on one side \"Salvation\" and the initials of the owner 'L.R.' on the other.";
 
+        letter = all.New();
+        letter.name = "Letter";
+        letter.icon = "items/letter".LoadSprite();
+        letter.desc = "An unsent, folded letter addressed to Lieutenant Redcliff, a military friend from times past. The earnest words within speak of camaraderie, hope, and an urgent plea to reconsider a tragic decision. The unopened envelope bears witness to the unfortunate timing of its delivery.";
+
         powder = all.New();
         powder.name = "Powder";
         powder.icon = "items/powder".LoadSprite();
         powder.desc = "Label says it is is medicine for lungs. But oddly you heart crumbles on thousand pieces when you look at this small vile..";
 
         uniform = all.New();
-        uniform.name = "Uniform";
-        uniform.icon = "items/uniform".LoadSprite();
-        uniform.desc = "It is your old military uniform with medals... They want to display it? Finally some appreciation";
+        uniform.name = "Medal of Honor";
+        uniform.icon = "items/medal".LoadSprite();
+        uniform.desc = "A once-prestigious military decoration, now dulled and worn from the passage of time. This medal was awarded for acts of valor and bravery in the face of overwhelming odds, but its faded glory now serves as a haunting reminder of the sacrifices made by you and your comrades. Its presence evokes a mix of pride and sorrow, stirring both determination and a sense of loss.";
 
         pills = all.New();
         pills.name = "Pills";
         pills.icon = "items/pills".LoadSprite();
         pills.desc = "About a dozen boxes with some kind of pills. Each pack has an inscription on both sides, on one side \"Exit\" on the other \"No exit\"";
+        
+        blood = all.New();
+        blood.name = "(My?) Blood";
+        blood.icon = "items/demon_blood".LoadSprite();
+        blood.desc = "A small glass vial containing a disturbing mixture of crimson liquid and a viscous black goo. The unsettling realization that this may be your own blood raises questions about how it was collected and the origin of the mysterious black substance.";
     }
 
     public static InventoryItemDefinition dust;
@@ -498,10 +512,10 @@ public static class ItemDatabase
         pistol.desc = "An aged, yet reliable semi-automatic handgun. Its dark steel frame has seen better days, but the weight in your hand brings a sense of security.";
         pistol.stackable = true;
         pistol.weaponAction = new WeaponActionDefinition();
-        pistol.weaponAction.defaultSound = "sound/combat/pistol";
         pistol.weaponAction.apCost = 0;
         pistol.weaponAction.ammo = ammo;
         pistol.weaponAction.attackAction = (item, enemy) => new GameQueue()
+            .Add(new GCSound("sound/combat/pistol"))
             .Add(new GCNarrative($"You fire the 1911 at the {enemy.definition.name}!"))
             .Add(new GCCombatDealDamage(item, enemy, 150));
 

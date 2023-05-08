@@ -75,4 +75,9 @@ public class NarrativeImageUI : MonoBehaviour
             i.narrativeBackground.DOColor(color, time);
         }
     }
+
+    public static void Solid()
+    {
+        i.narrativeBackground.sprite = null;
+    }
 }

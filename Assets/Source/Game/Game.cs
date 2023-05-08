@@ -19,6 +19,7 @@ public class Game
 
     public static void StartNextDelivery()
     {
+        DeliveryUI.Reset();
         phases.Add(new GCAcceptDelivery());
         phases.Add(new GCDeliveryStep());
         phases.Add(new GCDeliveryComplete());

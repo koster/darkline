@@ -80,7 +80,7 @@ public class CombatEnemy : CombatEntity
             switch (s)
             {
                 case CombatStatus.BLINDED:
-                    return 0.25f;
+                    return 0f;
             }
         }
 
@@ -140,13 +140,16 @@ public class CombatEnemy : CombatEntity
     {
         var q = new GameQueue();
 
+        if (IsDead())
+            return q;
+        
         for (var index = statuses.Count - 1; index >= 0; index--)
         {
             var s = statuses[index];
             switch (s)
             {
                 case CombatStatus.STUNNED:
-                    TryRemove(q, 1f, CombatStatus.STUNNED);
+                    TryRemove(q, 0.5f, CombatStatus.STUNNED);
                     break;
 
                 case CombatStatus.BLEEDING:

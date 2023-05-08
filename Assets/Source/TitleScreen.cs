@@ -18,11 +18,6 @@ public class TitleScreen : MonoBehaviour
 
     bool over;
 
-    void Start()
-    {
-        GameAnalytics.Initialize();
-    }
-
     void Update()
     {
         if (over)

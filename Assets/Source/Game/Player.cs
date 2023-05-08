@@ -23,6 +23,7 @@ public class PlayerStat
 public class Player
 {
     public List<PlayerStat> stats = new List<PlayerStat>();
+    public List<string> factsKnown = new List<string>();
     public int speed = 1;
 
     public int GetStat(EnumPlayerStats stat)

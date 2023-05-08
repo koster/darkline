@@ -30,16 +30,18 @@ public class PickOptionUI : UILayerItemBase
     {
         pickerModel = model;
 
+        var availableOptions = pickerModel.options.FindAll(m => m.condition.Evaluate());
+        
         for (var i = 0; i < options.Count; i++)
         {
-            if (i < pickerModel.options.Count)
-                options[i].Show(pickerModel, pickerModel.options[i]);
+            if (i < availableOptions.Count)
+                options[i].Show(pickerModel, availableOptions[i]);
             else
                 options[i].Hide();
         }
 
         var rectTransform = GetComponent<RectTransform>();
-        rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 90 * pickerModel.options.Count + 30 + 90);
+        rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 90 * availableOptions.Count + 30 + 90);
         
         pickerModel.OnSelected += OnSelect;
         

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Source.Game.Deliveries;
 
 [Serializable]
@@ -58,8 +59,8 @@ public class GameWorld
         // out   ?
 
         UIState.DoState(UI_STATES.NOTHING);
-
-        Game.world.deliveryIndex = 2;
+        Game.world.deliveryIndex = 0;
+        Game.contextQueue.Add(new GCQueue(Story_Main.Intro()));
 
         // #if UNITY_EDITOR
         //
@@ -68,8 +69,8 @@ public class GameWorld
         //
         // #endif
         
-        // Game.contextQueue.Add(new GCQueue(Story_Main.Delivery0()));
-        // Game.contextQueue.Add(new GCQueue(Story_Main.Intro()));
+        // Game.contextQueue.Add(new GCQueue(Story_Main.Delivery4_SelfIntro()));
+        // Game.contextQueue.Add(new GCQueue(Story_Main.Delivery4_SelfOutro()));
 
         // Game.contextQueue.Add(new GCQueue(Story_Deliveries.Delivery_04()));
         // Game.contextQueue.Add(new GCQueue(Story_Atmosphere.FindKnife()));
