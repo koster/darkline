@@ -571,7 +571,7 @@ namespace Source.Game.Deliveries
 
             q.Add(new GCNarrative("Professor: I just need a sample of your blood to verify something."));
 
-            q.Add(new GCSound("sound/buzzer"));
+            q.Add(new GCSound("sound/buzzer_short"));
             q.Add(new GCImage("narrative/doctor".LoadSprite()));
 
             q.Add(new GCNarrative("Professor: Please, lie down on the bed."));
@@ -637,12 +637,12 @@ namespace Source.Game.Deliveries
             q.Add(new GCNarrative("Professor: Stimulating your memories and keeping you 'alive' for a brief moment."));
             q.Add(new GCNarrative("Professor: But our time is running out."));
             
-            q.Add(new GCSound("sound/heart_monitor"));
-
             q.Add(new GCImage("narrative/jungle".LoadSprite()));
 
             q.Add(new GCNarrative("Professor: Tell us what you remember John."));
             q.Add(new GCNarrative("Professor: The Darkline."));
+            
+            q.Add(new GCSound("sound/guitar_noise_4", 0.25f));
             
             q.Add(new GCNarrative("You feel a shock, as if you've been hit by an electric current."));
             q.Add(new GCNarrative("And your start to remember."));
@@ -668,7 +668,7 @@ namespace Source.Game.Deliveries
 
             q.Add(new GCNarrative("But you still remember the coordinates."));
             
-            q.Add(new GCNarrative("John: You are not American government?"));
+            q.Add(new GCNarrative("John: You are not the American government?"));
             q.Add(new GCNarrative("John: If you were, you'd have the information."));
 
             q.Add(new GCImage("narrative/doctor".LoadSprite()));
@@ -741,7 +741,7 @@ namespace Source.Game.Deliveries
             q.Add(new GCUIState(UI_STATES.NARRATIVE_ONLY));
             q.Add(new GCImage(null));
 
-            q.Add(new GCSound("sound/guitar_noise_1", 0.25f));
+            q.Add(new GCSound("sound/guitar_noise_5", 0.25f));
             
             q.Add(new GCNarrative("You approach a neat one-story house surrounded by fields of blooming flowers."));
             q.Add(new GCNarrative("Emily opens the door."));
