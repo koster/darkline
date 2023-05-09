@@ -60,8 +60,10 @@ public class GameWorld
 
         UIState.DoState(UI_STATES.NOTHING);
         Game.world.deliveryIndex = 0;
-        Game.contextQueue.Add(new GCQueue(Story_Main.Delivery4_SelfOutro()));
+        // Game.contextQueue.Add(new GCQueue(Story_Main.Delivery4_SelfOutro()));
 
+        // Game.contextQueue.Add(new GCQueue(Story_Scavenging.Cemetery()));
+        
         Game.contextQueue.Add(new GCQueue(Story_Main.Intro()));
 
         // #if UNITY_EDITOR

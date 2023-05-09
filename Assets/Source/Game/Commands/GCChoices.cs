@@ -7,7 +7,7 @@ namespace Source.Game.Deliveries
 {
     public class ChoiceCost
     {
-        public int time;
+        public int stamina;
         public int money;
 
         public InventoryItemDefinition itemDef;
@@ -28,9 +28,9 @@ namespace Source.Game.Deliveries
         
         public string Requirenment()
         {
-            if (global::Game.world.player.GetStat(EnumPlayerStats.TIME) < time)
+            if (global::Game.world.player.GetStat(EnumPlayerStats.TIME) < stamina)
             {
-                return $"Need {time} time";
+                return $"Need {stamina} time";
             }
 
             if (global::Game.world.inventory.GetItemAmount(ItemDatabase.money) < money)
@@ -39,6 +39,26 @@ namespace Source.Game.Deliveries
             }
 
             return null;
+        }
+
+        public string GetCostString()
+        {
+            var s = "";
+            
+            if (stamina > 0)
+            {
+                s += "STAMINA: " + stamina;
+            }
+
+            return s;
+        }
+
+        public void Take()
+        {
+            if (stamina > 0)
+            {
+                global::Game.world.player.AddStat(EnumPlayerStats.STAMINA, -stamina);
+            }
         }
     }
 

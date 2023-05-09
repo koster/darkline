@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,6 +6,7 @@ using UnityEngine.UI;
 public class PickerOptionView : UILayerItemBase, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
     public TextMeshProUGUI label;
+    public TextMeshProUGUI cost;
     
     public Image background;
     public GameObject highlight;
@@ -40,6 +40,7 @@ public class PickerOptionView : UILayerItemBase, IPointerClickHandler, IPointerE
         this.modelOption = modelOption;
         
         label.text = modelOption.text;
+        cost.text = modelOption.cost?.GetCostString();
     }
 
     void Update()

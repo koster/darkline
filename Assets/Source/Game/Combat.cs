@@ -300,8 +300,8 @@ public class Combat : QueueItemBase
         {
             if (Game.world.combatTutorial == false)
             {
-                subqueue.Add(new GCAlert("Attacks cost AP (Pction Points)."));
-                subqueue.Add(new GCAlert("You have 1 left."));
+                subqueue.Add(new GCAlert("Attacks cost AP (Pction Points) and S (Stamina)"));
+                subqueue.Add(new GCAlert("You have 1 AP left."));
                 subqueue.Add(new GCAlert("When you've spent all of them, your turn ends."));
                 
                 Game.world.combatTutorial = true;
@@ -493,6 +493,7 @@ public class GCCombatPickTarget : QueueItemBase
     public override void Exit()
     {
         Game.world.combat.player.actionPoints -= action.apCost;
+        Game.world.player.AddStat(EnumPlayerStats.STAMINA, -action.staminaCost);
         
         base.Exit();
     }

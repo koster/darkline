@@ -13,6 +13,7 @@ public class ListPickerModel
         GameAnalytics.NewDesignEvent("option_" + Sanitize(modelOption));
 
         "sound/boop2".PlayClip();
+        modelOption.cost?.Take();
         modelOption.optionCallback?.Invoke();
         OnSelected.Invoke(options.IndexOf(modelOption), modelOption);
     }
