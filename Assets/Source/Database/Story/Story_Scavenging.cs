@@ -179,34 +179,6 @@ public static class Story_Scavenging
         );
         return q;
     }
-    
-    
-    public static GameQueue WorkingShoppingMall()
-    {
-        var q = new GameQueue();
-        q.Add(new GCAlert("You found a working shopping mall!"));
-        q.Add(new GCChoices()
-            .Add("Steal something", queue =>
-            {
-                queue.Add(new GCNarrative("You try to steal something from the store."));
-                queue.Add(new GCAddItem(ScavengingItems.GetFoodItem()));
-                queue.Add(new GCQueue(CombatDatabase.Combat_ShoppingMall()));
-            }, new ChoiceCost { stamina = 5 })
-            .Add("Buy some food", queue =>
-            {
-                queue.Add(new GCNarrative("You buy some food from the store."));
-                queue.Add(new GCAddItem(ScavengingItems.GetFoodItem()));
-                queue.Add(new GCAddItem(ItemDatabase.money, -50, GiveItemStyle.ALERT));
-            }, new ChoiceCost { money = 50 })
-            .Add("Buy instruments", queue =>
-            {
-                queue.Add(new GCNarrative("You buy some instruments from the store."));
-                queue.Add(new GCAddItem(ScavengingItems.GetToolItem()));
-                queue.Add(new GCAddItem(ItemDatabase.money, -100, GiveItemStyle.ALERT));
-            }, new ChoiceCost { money = 100 })
-        );
-        return q;
-    }
 }
 
 public struct GiveItem
@@ -227,8 +199,12 @@ public static class ScavengingItems
     {
         var pool = new List<GiveItem>
         {
-            new(ItemDatabase.shovel, 1),
-            new(ItemDatabase.crowbar, 1)
+            new(ItemDatabase.beer, 1),
+            new(ItemDatabase.cannedCoffee, 1),
+            new(ItemDatabase.waterBottle, 1),
+            new(ItemDatabase.medkit, 1)
+            // new(ItemDatabase.shovel, 1),
+            // new(ItemDatabase.crowbar, 1)
         };
 
         return pool.GetRandom();
@@ -241,7 +217,20 @@ public static class ScavengingItems
             new(ItemDatabase.apple, 1),
             new(ItemDatabase.apple, 2),
             new(ItemDatabase.waterBottle, 1),
-            new(ItemDatabase.waterBottle, 2)
+            new(ItemDatabase.waterBottle, 2),
+            new(ItemDatabase.burger, 1)
+        };
+        
+        return pool.GetRandom();
+    }
+
+    public static GiveItem GetHolyItem()
+    {
+        var pool = new List<GiveItem>
+        {
+            new(ItemDatabase.holyWater, 1),
+            new(ItemDatabase.cocaine, 1),
+            new(ItemDatabase.ambrosia, 1)
         };
         
         return pool.GetRandom();
@@ -265,6 +254,20 @@ public static class ScavengingItems
         return pool.GetRandom();
     }
 
+    public static GiveItem GetRandomTrashItem()
+    {
+        var pool = new List<GiveItem>
+        {
+            new(ItemDatabase.comic, 1),
+            new(ItemDatabase.vape, 1),
+            new(ItemDatabase.cannedCoffee, 1),
+            new(ItemDatabase.apple, 1),
+            new(ItemDatabase.monsterMeat, 1)
+        };
+        
+        return pool.GetRandom();
+    }
+
     public static GiveItem GetFirearmWeapon()
     {
         var pool = new List<GiveItem>
@@ -280,7 +283,8 @@ public static class ScavengingItems
         var pool = new List<GiveItem>
         {
             new(ItemDatabase.chewingTobacco, 1),
-            new(ItemDatabase.dust, 1)
+            new(ItemDatabase.dust, 1),
+            new(ItemDatabase.holyWater, 1)
         };
         
         return pool.GetRandom();
@@ -293,7 +297,8 @@ public static class ScavengingItems
             new(ItemDatabase.medkit, 1),
             new(ItemDatabase.tranquilizers, 1),
             new(ItemDatabase.psychedelics, 1),
-            new(ItemDatabase.bandage, 1)
+            new(ItemDatabase.bandage, 1),
+            new(ItemDatabase.painkillers, 1)
         };
         
         return pool.GetRandom();
@@ -315,7 +320,9 @@ public static class ScavengingItems
     {
         var pool = new List<GiveItem>
         {
-            new (ItemDatabase.shovel, 1)
+            new (ItemDatabase.dust, 1),
+            new (ItemDatabase.ammo, 1),
+            new (ItemDatabase.coin, 1)
         };
         
         return pool.GetRandom();
@@ -325,8 +332,8 @@ public static class ScavengingItems
     {
         var pool = new List<GiveItem>
         {
-            new (ItemDatabase.shovel, 1),
-            new (ItemDatabase.money, 1),
+            new (ItemDatabase.holyWater, 1),
+            new (ItemDatabase.chewingTobacco, 1),
             new (ItemDatabase.monsterMeat, 1)
         };
         
@@ -358,6 +365,16 @@ public static class ScavengingItems
             new(ItemDatabase.chewingTobacco, 1),
             new(ItemDatabase.dust, 1)
         };
+
+        if (Game.world.player.GetStat(EnumPlayerStats.THIRST) == 0)
+            return new(ItemDatabase.waterBottle, 1);
+        if (Game.world.player.GetStat(EnumPlayerStats.HUNGER) == 0)
+            return new(ItemDatabase.burger, 1);
+        if (Game.world.player.GetStat(EnumPlayerStats.MENTAL) == 0)
+            return new(ItemDatabase.tranquilizers, 1);
+        if (Game.world.player.GetStat(EnumPlayerStats.HEALTH) < 10)
+            return new(ItemDatabase.tranquilizers, 1);
+            
         
         return pool.GetRandom();
     }

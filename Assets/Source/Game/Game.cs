@@ -36,4 +36,9 @@ public class Game
             phases.Update();
         }
     }
+
+    public static void DeliverySetback()
+    {
+        world.delivery.position -= 5;
+    }
 }

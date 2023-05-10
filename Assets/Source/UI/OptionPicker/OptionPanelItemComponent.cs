@@ -48,7 +48,10 @@ public class OptionPanelItemComponent : MonoBehaviour, IPointerClickHandler, IPo
         {
             CalculateConditions(panelModel, model);
 
-            costLabel.text = "AP: " + model.weaponAction.apCost + " S: " + model.weaponAction.staminaCost;
+            if (model.weaponAction.staminaCost > 0)
+                costLabel.text = "AP: " + model.weaponAction.apCost + " S: " + model.weaponAction.staminaCost;
+            else
+                costLabel.text = "AP: " + model.weaponAction.apCost;
         }
         else
         {

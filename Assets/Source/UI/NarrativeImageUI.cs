@@ -15,10 +15,11 @@ public class NarrativeImageUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public static void Show(Sprite sprite, bool instant = false)
+    public static void Show(Sprite sprite, bool instant = false, float offY = -144)
     {
         ShowBackground(instant);
-        
+
+        i.image.transform.localPosition = new Vector3(0, offY, 0);
         i.gameObject.SetActive(true);
 
         if (sprite != null)

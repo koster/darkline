@@ -48,7 +48,7 @@ public static class EnemyDatabase
         
         sewer = all.New();
         sewer.image = "enemies/sewer".LoadSprite();
-        sewer.name = "sewer";
+        sewer.name = "Sewer";
         sewer.health = 150;
         sewer.lvl = 1;
         sewer.scale = 1.2f;
@@ -111,7 +111,7 @@ public static class EnemyDatabase
         dog.scale = 1f;
         dog.combatActions.Add(new CombatActionDefinition
         {
-            queue = CombatActions.SimpleBite(dog, 10, 15)
+            queue = CombatActions.SimpleBite(dog, 3, 6)
         });
         
         spiker = all.New();

@@ -129,7 +129,7 @@ public class NarrativeBoxUI : UILayerItemBase
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKey(KeyCode.S))
         {
             skip = true;
         }

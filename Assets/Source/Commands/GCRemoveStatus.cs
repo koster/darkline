@@ -13,15 +13,21 @@ public class GCRemoveStatus : QueueItemBase
     {
         base.Enter();
 
-        if (Game.world.status.Has(status))
+        if (status == EnumPlayerStatuses.ALL_NEGATIVE)
         {
-            subqueue.Add(new GCNarrative($"You are no longer {status}"));
-            Game.world.status.Remove(status);
+            TryRemove(EnumPlayerStatuses.DRUNK);
+            TryRemove(EnumPlayerStatuses.BLEEDING);
         }
-        else
+        else if (Game.world.status.Has(status))
         {
-            Complete();
+            TryRemove(status);
         }
+    }
+
+    void TryRemove(EnumPlayerStatuses enumPlayerStatuses)
+    {
+        subqueue.Add(new GCNarrative($"You are no longer {enumPlayerStatuses}"));
+        Game.world.status.Remove(enumPlayerStatuses);
     }
 
     public override void Update()

@@ -55,7 +55,7 @@ namespace Source.Game.Deliveries
             };
             var delivery1 = new DeliveryDefinition // tutorial - combat
             {
-                item = ItemDatabase.powder,
+                item = ItemDatabase.ring,
                 length = 10,
                 dangerLadder = new List<Func<GameQueue.GameQueue>>
                 {
@@ -153,7 +153,7 @@ namespace Source.Game.Deliveries
             };
             var delivery3 = new DeliveryDefinition
             {
-                item = ItemDatabase.uniform,
+                item = ItemDatabase.medal,
                 length = 13,
                 dangerLadder = new List<Func<GameQueue.GameQueue>>
                 {

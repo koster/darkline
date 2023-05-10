@@ -12,6 +12,7 @@ public class InventoryInfoPanel : MonoBehaviour
     public Image icon;
     public TextMeshProUGUI title;
     public TextMeshProUGUI desc;
+    public TextMeshProUGUI stat;
     public List<InventoryActionButton> buttons;
 
     public void Show(InventoryModel inventory_model, InventoryCellModel cell_model)
@@ -22,6 +23,7 @@ public class InventoryInfoPanel : MonoBehaviour
         icon.sprite = cell_model.definition.icon;
         title.text = cell_model.definition.name;
         desc.text = cell_model.definition.desc;
+        stat.text = cell_model.definition.GetStatsLabel();
 
         for (var i = 0; i < buttons.Count; i++)
         {

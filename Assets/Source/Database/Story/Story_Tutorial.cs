@@ -45,17 +45,17 @@ public static class Story_Tutorial
         
         q.Add(new GCNarrative("Emily: John!"));
         
-        q.Add(new GCNarrative("John: Do I know you?"));
+        q.Add(new GCNarrative("John: Emily? What are you doing here?"));
         
         q.Add(new GCNarrative("Emily: What?!"));
         q.Add(new GCNarrative("Emily: You're joking right?"));
 
-        q.Add(new GCNarrative("John: Sorry, uh, I think I've hit my head really hard... I..."));
+        q.Add(new GCNarrative("John: I mean, sorry, Emily. I just haven't seen you for so long."));
 
-        q.Add(new GCNarrative("Emily: I'm your wife, silly! Stop fooling around."));
-        q.Add(new GCNarrative("Emily: I've made you lunch, and you forgot it!"));
+        q.Add(new GCNarrative("Emily: What? Stop fooling around."));
+        q.Add(new GCNarrative("Emily: I've made you a lunch, and you forgot it!"));
 
-        q.Add(new GCNarrative("John: Thank you! I was about too uh... Head to the hospital..."));
+        q.Add(new GCNarrative("John: A lunch?"));
         
         q.Add(new GCImage(null));
         
@@ -63,6 +63,8 @@ public static class Story_Tutorial
 
         q.Add(new GCNarrative("The woman seems to have vanished into thin air..."));
         
+        q.Add(new GCNarrative("John: What is this nonsense. It ought to have been someone else."));
+
         q.Add(new GCImageHide());
         q.Add(new CGUIStateRestore());
 

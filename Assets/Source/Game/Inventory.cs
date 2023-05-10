@@ -112,7 +112,7 @@ public class WeaponActionDefinition
     public Func<InventoryItemDefinition, CombatEnemy, GameQueue> attackAction;
     
     public int apCost = 2;
-    public int staminaCost = 5;
+    public int staminaCost = 0;
     
     public bool noTarget;
     public float missChance;

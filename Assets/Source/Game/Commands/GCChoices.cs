@@ -14,6 +14,7 @@ namespace Source.Game.Deliveries
         public int itemDefAmount;
         
         public List<EnumItemTag> needsItems = new List<EnumItemTag>();
+        public string manualString;
 
         public ChoiceCost(params EnumItemTag[] tags)
         {
@@ -50,14 +51,14 @@ namespace Source.Game.Deliveries
                 s += "STAMINA: " + stamina;
             }
 
-            return s;
+            return manualString + s;
         }
 
         public void Take()
         {
             if (stamina > 0)
             {
-                global::Game.world.player.AddStat(EnumPlayerStats.STAMINA, -stamina);
+                global::Game.contextQueue.Add(new GCAddStat(EnumPlayerStats.STAMINA, -stamina));
             }
         }
     }
@@ -162,6 +163,17 @@ namespace Source.Game.Deliveries
         {
             lastModel.condition.all_facts.AddRange(fact);
             return this;
+        }
+
+        public void Finish()
+        {
+            listIsCompleted = true;
+        }
+
+        public void SetDetailString(string costsCoin)
+        {
+            lastModel.cost ??= new ChoiceCost();
+            lastModel.cost.manualString = costsCoin;
         }
     }
 }

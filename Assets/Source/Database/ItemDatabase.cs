@@ -4,7 +4,6 @@ using Source.Commands;
 using Source.GameQueue;
 using Source.Util;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class InventoryItemDefinition
 {
@@ -19,6 +18,31 @@ public class InventoryItemDefinition
     public bool IsPresent()
     {
         return Game.world.inventory.HasItem(this);
+    }
+
+    public string GetStatsLabel()
+    {
+        var useQueue = OnUse?.Invoke();
+        var s = "";
+        
+        if (useQueue != null)
+        {
+            var items = useQueue.Items;
+
+            foreach (var i in items)
+            {
+                if (i is GCAddStat addStat)
+                {
+                    s += addStat.ToString()+ "\n";
+                }
+                if (i is GCCombatGiveActionPoints)
+                {
+                    s += "+1 AP IN COMBAT"+ "\n";
+                }
+            }
+        }
+
+        return s;
     }
 }
 
@@ -76,6 +100,7 @@ public static class ItemDatabase
     public static InventoryItemDefinition energyDrink;
     public static InventoryItemDefinition tranquilizers;
     public static InventoryItemDefinition painkillers;
+    public static InventoryItemDefinition coin;
     public static InventoryItemDefinition monsterMeat;
     public static InventoryItemDefinition demonBlood;
     public static InventoryItemDefinition psychedelics;
@@ -108,6 +133,12 @@ public static class ItemDatabase
         money.icon = "items/money".LoadSprite();
         money.desc = "A stack of weathered, grimy banknotes. In the twisted landscape you find yourself in, their value is uncertain. Perhaps they can still be traded or used as kindling for a fire.";
 
+        coin = all.New();
+        coin.name = "Coin";
+        coin.stackable = true;
+        coin.icon = "items/coin".LoadSprite();
+        coin.desc = "An unusual and heavy coin, made of an unknown metal that feels both warm and cold to the touch. Emblazoned with a pentagram, the coin exudes an eerie aura that seems to whisper of arcane knowledge and hidden power. Its origins and purpose remain unclear.";
+
         // gives you 2 ap
         // doubles incoming damage
         
@@ -133,7 +164,7 @@ public static class ItemDatabase
         comic = all.New();
         comic.name = "Comic";
         comic.icon = "items/comic".LoadSprite();
-        comic.desc = "A tattered, vintage comic book with fading colors and frayed edges. Lose yourself in a world of imagination and adventure. Restores 30 mental.";
+        comic.desc = "A tattered, vintage comic book with fading colors and frayed edges. Lose yourself in a world of imagination and adventure.";
         comic.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You start reading the comic. It's funny and entertaining."))
             .Add(new GCAddStat(EnumPlayerStats.MENTAL, 30, AddStatMode.FLOAT_TEXT_ALERT));
@@ -162,8 +193,8 @@ public static class ItemDatabase
             .Add(new GCCombatStatusChance(enemy, CombatStatus.VULNERABLE, 1f));
         holyWater.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You take a sip of water! It's cold and refreshing."))
-            .Add(new GCAddStat(EnumPlayerStats.THIRST, 10, AddStatMode.FLOAT_TEXT_ALERT))
-            .Add(new GCAddStat(EnumPlayerStats.STAMINA, 10, AddStatMode.FLOAT_TEXT_ALERT));
+            .Add(new GCAddStat(EnumPlayerStats.THIRST, 50, AddStatMode.FLOAT_TEXT_ALERT))
+            .Add(new GCAddStat(EnumPlayerStats.STAMINA, 25, AddStatMode.FLOAT_TEXT_ALERT));
     }
 
     static void Tools()
@@ -191,10 +222,11 @@ public static class ItemDatabase
         vape = all.New();
         vape.name = "Vape";
         vape.icon = "items/vape".LoadSprite();
-        vape.desc = "A compact, modern electronic vaporizer emitting a faint, sweet-smelling mist. Its calming effects offer a momentary escape from the nightmarish world you're trapped in. Adds 40 mental but reduces 10 health.";
+        vape.desc = "A compact, modern electronic vaporizer emitting a faint, sweet-smelling mist. Its calming effects offer a momentary escape.";
         vape.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You take a hit from your vape. It makes you feel better."))
             .Add(new GCAddStat(EnumPlayerStats.MENTAL, 40, AddStatMode.FLOAT_TEXT_ALERT))
+            .Add(new GCAddStat(EnumPlayerStats.STAMINA, 40, AddStatMode.FLOAT_TEXT_ALERT))
             .Add(new GCAddStat(EnumPlayerStats.HEALTH, -10, AddStatMode.FLOAT_TEXT_ALERT));
 
         cocaine = all.New();
@@ -213,8 +245,8 @@ public static class ItemDatabase
         psychedelics.desc = "A small bag of colorful, hallucinogenic tablets. In a world that already challenges the boundaries of reality, consuming these may either provide insight or plunge you further into madness. Effects unpredictable.";
         psychedelics.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You take the psychedelics. Your mind opens up, but you start to feel thirsty."))
-            .Add(new GCAddStat(EnumPlayerStats.MENTAL, 30, AddStatMode.FLOAT_TEXT_ALERT))
-            .Add(new GCAddStat(EnumPlayerStats.THIRST, 50, AddStatMode.FLOAT_TEXT_ALERT));
+            .Add(new GCAddStat(EnumPlayerStats.MENTAL, 50, AddStatMode.FLOAT_TEXT_ALERT))
+            .Add(new GCAddStat(EnumPlayerStats.THIRST, -50, AddStatMode.FLOAT_TEXT_ALERT));
     }
 
     static void Medical()
@@ -222,31 +254,31 @@ public static class ItemDatabase
         bandage = all.New();
         bandage.name = "Bandage";
         bandage.icon = "items/bandage".LoadSprite();
-        bandage.desc = "Restores 10 HP and stops bleeding.";
+        bandage.desc = "A roll of clean, white gauze designed to provide protection and support to wounds and injuries. Having a reliable means to treat cuts, scrapes, and abrasions is essential for survival.";
         bandage.stackable = true;
         bandage.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You apply the bandage to your wounds. It stops the bleeding."))
-            .Add(new GCAddStat(EnumPlayerStats.HEALTH, 10, AddStatMode.FLOAT_TEXT_ALERT))
+            .Add(new GCAddStat(EnumPlayerStats.HEALTH, 25, AddStatMode.FLOAT_TEXT_ALERT))
             .Add(new GCRemoveStatus(EnumPlayerStatuses.BLEEDING));
 
         medkit = all.New();
         medkit.name = "Medkit";
         medkit.icon = "items/medkit".LoadSprite();
-        medkit.desc = "Restores 10 HP and stops bleeding.";
+        medkit.desc = "A compact, durable case containing essential medical supplies needed to treat a variety of injuries and ailments. Having access to a medkit can be the difference between life and death.";
         medkit.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You apply the bandage to your wounds. It stops the bleeding."))
-            .Add(new GCAddStat(EnumPlayerStats.HEALTH, 30, AddStatMode.FLOAT_TEXT_ALERT))
+            .Add(new GCAddStat(EnumPlayerStats.HEALTH, 70, AddStatMode.FLOAT_TEXT_ALERT))
             .Add(new GCRemoveStatus(EnumPlayerStatuses.ALL_NEGATIVE));
 
         tranquilizers = all.New();
         tranquilizers.name = "Tranquilizers";
         tranquilizers.icon = "items/tranquilizers".LoadSprite();
-        tranquilizers.desc = "Restores 40 HP and increases 20 brain, but takes 30 minutes to consume";
+        tranquilizers.desc = "A small bottle of potent tranquilizer pills. They provide a temporary reprieve from the constant fear and anxiety, allowing for moments of calm.";
         tranquilizers.stackable = true;
         tranquilizers.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You take some tranquilizers. You start feeling relaxed and your wounds heal."))
-            .Add(new GCAddStat(EnumPlayerStats.HEALTH, 40, AddStatMode.FLOAT_TEXT_ALERT))
-            .Add(new GCAddStat(EnumPlayerStats.MENTAL, 20, AddStatMode.FLOAT_TEXT_ALERT));
+            .Add(new GCAddStat(EnumPlayerStats.HEALTH, 50, AddStatMode.FLOAT_TEXT_ALERT))
+            .Add(new GCAddStat(EnumPlayerStats.MENTAL, 50, AddStatMode.FLOAT_TEXT_ALERT));
 
         painkillers = all.New();
         painkillers.name = "Painkillers";
@@ -255,7 +287,7 @@ public static class ItemDatabase
         painkillers.stackable = true;
         painkillers.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You take some painkillers. You start feeling relaxed and your pain numbs."))
-            .Add(new GCAddStat(EnumPlayerStats.HEALTH, 40, AddStatMode.FLOAT_TEXT_ALERT));
+            .Add(new GCAddStat(EnumPlayerStats.HEALTH, 50, AddStatMode.FLOAT_TEXT_ALERT));
     }
 
     static void Food()
@@ -263,7 +295,7 @@ public static class ItemDatabase
         burger = all.New();
         burger.name = "Burger";
         burger.icon = "items/burger".LoadSprite();
-        burger.desc = "A slightly charred, yet appetizing burger with a juicy beef patty nestled between two soft buns. Topped with wilted lettuce and a hint of a mysterious sauce. Surprisingly satisfying in this grim reality. Restores 30 hunger.";
+        burger.desc = "A slightly charred, yet appetizing burger with a juicy beef patty nestled between two soft buns. Topped with wilted lettuce and a hint of a mysterious sauce. Surprisingly satisfying in this grim reality.";
         burger.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You take a bite of the burger. It's juicy and delicious."))
             .Add(new GCAddStat(EnumPlayerStats.HUNGER, 30, AddStatMode.FLOAT_TEXT_ALERT));
@@ -291,12 +323,12 @@ public static class ItemDatabase
         waterBottle = all.New();
         waterBottle.name = "Water Bottle";
         waterBottle.icon = "items/water".LoadSprite();
-        waterBottle.desc = "A simple plastic water bottle filled with clear, untainted water. In this nightmarish world, even the simplest things can be a lifesaver. Restores 20 thirst 20 stamina.";
+        waterBottle.desc = "A simple plastic water bottle filled with clear, untainted water. Can be a lifesaver. ";
         waterBottle.stackable = true;
         waterBottle.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You take a sip of water! It's cold and refreshing."))
-            .Add(new GCAddStat(EnumPlayerStats.THIRST, 20, AddStatMode.FLOAT_TEXT_ALERT))
-            .Add(new GCAddStat(EnumPlayerStats.STAMINA, 20, AddStatMode.FLOAT_TEXT_ALERT));
+            .Add(new GCAddStat(EnumPlayerStats.THIRST, 50, AddStatMode.FLOAT_TEXT_ALERT))
+            .Add(new GCAddStat(EnumPlayerStats.STAMINA, 25, AddStatMode.FLOAT_TEXT_ALERT));
 
         apple = all.New();
         apple.name = "Apple";
@@ -311,7 +343,7 @@ public static class ItemDatabase
         tomatoes = all.New();
         tomatoes.name = "Tomatoes";
         tomatoes.icon = "items/tomatoes".LoadSprite();
-        tomatoes.desc = "Restores 10 hunger and 15 thirst.";
+        tomatoes.desc = "A small cluster of ripe, red tomatoes, bursting with juicy flavor and packed with essential nutrients. In the bleak and landscape you're navigating, finding fresh produce like these tomatoes can be a rare and welcome surprise. ";
         tomatoes.stackable = true;
         tomatoes.OnUse = () => new GameQueue()
             .Add(new GCNarrative("This tomato is really juicy."))
@@ -321,28 +353,30 @@ public static class ItemDatabase
         coldPizza = all.New();
         coldPizza.name = "Cold Pizza";
         coldPizza.icon = "items/coldpizza".LoadSprite();
-        coldPizza.desc = "Restores 40 hunger";
+        coldPizza.desc = "A leftover slice of pizza, its once-melty cheese now congealed and its once-crisp crust slightly chewy. Despite the less-than-ideal state it's in, the familiar taste of this cold pizza provides a fleeting moment of comfort and normalcy.";
         coldPizza.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You take a bite of the cold pizza. It's not as good as fresh but it still satisfies your hunger."))
-            .Add(new GCAddStat(EnumPlayerStats.HUNGER, 40, AddStatMode.FLOAT_TEXT_ALERT));
+            .Add(new GCAddStat(EnumPlayerStats.HUNGER, 40, AddStatMode.FLOAT_TEXT_ALERT))
+            .Add(new GCAddStat(EnumPlayerStats.MENTAL, 5, AddStatMode.FLOAT_TEXT_ALERT));
 
         cannedCoffee = all.New();
         cannedCoffee.name = "Canned Coffee";
         cannedCoffee.icon = "items/cannedCoffee".LoadSprite();
-        cannedCoffee.desc = "Restores stamina and thirst";
+        cannedCoffee.desc = "A compact, aluminum can filled with a rich, aromatic coffee blend. The familiar taste of this caffeinated beverage provides a much-needed sense of comfort and normalcy.";
         cannedCoffee.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You take a sip of canned coffee! It's strong and energizing."))
             .Add(new GCAddStat(EnumPlayerStats.STAMINA, 50, AddStatMode.FLOAT_TEXT_ALERT))
-            .Add(new GCAddStat(EnumPlayerStats.THIRST, 5, AddStatMode.FLOAT_TEXT_ALERT));
+            .Add(new GCAddStat(EnumPlayerStats.THIRST, 30, AddStatMode.FLOAT_TEXT_ALERT));
 
         beer = all.New();
         beer.name = "Beer";
         beer.icon = "items/beer".LoadSprite();
-        beer.desc = "A cold beer, it relaxes you but reduces your focus.";
+        beer.desc = "A chilled bottle of amber liquid, offering a familiar and comforting taste amid the nightmarish surroundings. While indulging in this alcoholic beverage may provide temporary relief from the stress and anxiety of this harrowing world, it also has the potential to impair your judgment, coordination, and reaction time.";
         beer.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You take a sip of beer, it's cold and refreshing."))
-            .Add(new GCAddStat(EnumPlayerStats.THIRST, 30, AddStatMode.FLOAT_TEXT_ALERT))
+            .Add(new GCAddStat(EnumPlayerStats.THIRST, 50, AddStatMode.FLOAT_TEXT_ALERT))
             .Add(new GCAddStat(EnumPlayerStats.STAMINA, 20, AddStatMode.FLOAT_TEXT_ALERT))
+            .Add(new GCAddStat(EnumPlayerStats.MENTAL, 20, AddStatMode.FLOAT_TEXT_ALERT))
             .Add(new GCRemoveStatus(EnumPlayerStatuses.DRUNK));
 
         energyDrink = all.New();
@@ -352,13 +386,14 @@ public static class ItemDatabase
         energyDrink.stackable = true;
         energyDrink.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You drink an energy drink! It's sweet and gives you a burst of energy."))
+            .Add(new GCAddStat(EnumPlayerStats.THIRST, 35, AddStatMode.FLOAT_TEXT_ALERT))
             .Add(new GCAddStat(EnumPlayerStats.STAMINA, 70, AddStatMode.FLOAT_TEXT_ALERT))
             .Add(new GCAddStat(EnumPlayerStats.HUNGER, -20, AddStatMode.FLOAT_TEXT_ALERT));
 
         monsterMeat = all.New();
         monsterMeat.name = "Monster Meat";
         monsterMeat.icon = "items/monstermeat".LoadSprite();
-        monsterMeat.desc = "A pile of brownish red flesh oozing with black goo. Who would eat that?\nRestores 50 hunger, reduces 20 mental";
+        monsterMeat.desc = "A pile of brownish red flesh oozing with black goo. Who would eat that?\n";
         monsterMeat.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You eat the monster meat. It's filling but makes you feel a bit off."))
             .Add(new GCAddStat(EnumPlayerStats.HUNGER, 50, AddStatMode.FLOAT_TEXT_ALERT))
@@ -384,7 +419,7 @@ public static class ItemDatabase
         suitcase = all.New();
         suitcase.name = "Suitcase";
         suitcase.icon = "items/suitcase".LoadSprite();
-        suitcase.desc = "Mysterious suitcase. Has a 6 digit lock on it.";
+        suitcase.desc = "An enigmatic, black suitcase with a sleek and sturdy exterior, locked tight with a combination mechanism. Entrusted to you by a solemn officer, the case was given to you with explicit instructions to deliver it, though its contents and purpose remain shrouded in mystery. ";
 
         shotgun = all.New();
         shotgun.name = "Shotgun";
@@ -394,25 +429,30 @@ public static class ItemDatabase
         letter = all.New();
         letter.name = "Letter";
         letter.icon = "items/letter".LoadSprite();
-        letter.desc = "An unsent, folded letter addressed to Lieutenant Redcliff, a military friend from times past. The earnest words within speak of camaraderie, hope, and an urgent plea to reconsider a tragic decision. The unopened envelope bears witness to the unfortunate timing of its delivery.";
+        letter.desc = "An unsent, folded letter addressed to Lieutenant Redcliff, a military friend from times past. The earnest words within speak of camaraderie, hope, and an urgent plea to reconsider a tragic decision. The unsent envelope bears witness to the unfortunate timing of its delivery.";
 
         powder = all.New();
         powder.name = "Powder";
         powder.icon = "items/powder".LoadSprite();
         powder.desc = "Label says it is is medicine for lungs. But oddly you heart crumbles on thousand pieces when you look at this small vile..";
 
-        uniform = all.New();
-        uniform.name = "Medal of Honor";
-        uniform.icon = "items/medal".LoadSprite();
-        uniform.desc = "A once-prestigious military decoration, now dulled and worn from the passage of time. This medal was awarded for acts of valor and bravery in the face of overwhelming odds, but its faded glory now serves as a haunting reminder of the sacrifices made by you and your comrades. Its presence evokes a mix of pride and sorrow, stirring both determination and a sense of loss.";
+        medal = all.New();
+        medal.name = "Medal of Honor";
+        medal.icon = "items/medal".LoadSprite();
+        medal.desc = "A once-prestigious military decoration, now dulled and worn from the passage of time. This medal was awarded for acts of valor and bravery in the face of overwhelming odds, but its faded glory now serves as a haunting reminder of the sacrifices made by you and your comrades. Its presence evokes a mix of pride and sorrow, stirring both determination and a sense of loss.";
 
+        ring = all.New();
+        ring.name = "Golden Ring";
+        ring.icon = "items/wedding_ring".LoadSprite();
+        ring.desc = "A once-shining wedding band, now slightly tarnished by time and the harrowing experiences you've endured. This ring, unmistakably yours, stirs memories of a love long lost, echoing the whispers of a distant past. Its presence serves as a bittersweet reminder of the love and commitment that still lingers in your heart, fueling your determination to uncover the truth and find solace.";
+        
         pills = all.New();
         pills.name = "Pills";
         pills.icon = "items/pills".LoadSprite();
         pills.desc = "About a dozen boxes with some kind of pills. Each pack has an inscription on both sides, on one side \"Exit\" on the other \"No exit\"";
         
         blood = all.New();
-        blood.name = "(My?) Blood";
+        blood.name = "Blood";
         blood.icon = "items/demon_blood".LoadSprite();
         blood.desc = "A small glass vial containing a disturbing mixture of crimson liquid and a viscous black goo. The unsettling realization that this may be your own blood raises questions about how it was collected and the origin of the mysterious black substance.";
     }
@@ -420,7 +460,8 @@ public static class ItemDatabase
     public static InventoryItemDefinition dust;
     public static InventoryItemDefinition chewingTobacco;
     public static InventoryItemDefinition pills;
-    public static InventoryItemDefinition uniform;
+    public static InventoryItemDefinition medal;
+    public static InventoryItemDefinition ring;
 
     static void CombatConsumables()
     {
@@ -440,6 +481,12 @@ public static class ItemDatabase
         chewingTobacco.name = "Chewing Tobacco";
         chewingTobacco.icon = "items/chewingtobacco".LoadSprite();
         chewingTobacco.desc = "A worn pouch of coarse, dried tobacco leaves. When placed in the mouth, the strong, bitter taste provides a brief, but potent distraction from the relentless dread of this twisted world. May temporarily increase focus and reduce anxiety.";
+        
+        chewingTobacco.OnUse = () => new GameQueue()
+            .Add(new GCNarrative("You chew some tobacco, it's energizing."))
+            .Add(new GCAddStat(EnumPlayerStats.MENTAL, 25, AddStatMode.FLOAT_TEXT_ALERT))
+            .Add(new GCAddStat(EnumPlayerStats.STAMINA, 50, AddStatMode.FLOAT_TEXT_ALERT));
+        
         chewingTobacco.weaponAction = new WeaponActionDefinition();
         chewingTobacco.weaponAction.apCost = 0;
         chewingTobacco.weaponAction.noTarget = true;
@@ -515,6 +562,7 @@ public static class ItemDatabase
         pistol.weaponAction.apCost = 0;
         pistol.weaponAction.ammo = ammo;
         pistol.weaponAction.attackAction = (item, enemy) => new GameQueue()
+            .Add(new GCScreenShake(1f))
             .Add(new GCSound("sound/combat/pistol"))
             .Add(new GCNarrative($"You fire the 1911 at the {enemy.definition.name}!"))
             .Add(new GCCombatDealDamage(item, enemy, 150));
@@ -528,6 +576,23 @@ public static class ItemDatabase
         rifle.weaponAction.attackAction = (item, enemy) => new GameQueue()
             .Add(new GCNarrative($"You fire your rifle at the {enemy.definition.name}!"))
             .Add(new GCCombatDealDamage(item, enemy, 200));
+    }
+}
+
+class GCScreenShake : QueueItemBase
+{
+    readonly float _shake;
+
+    public GCScreenShake(float f)
+    {
+        _shake = f;
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+        GameCamera.PunchShake(_shake);
+        Complete();
     }
 }
 

@@ -30,15 +30,16 @@ public class GCRestart : QueueItemBase
 
         Game.world.status.Reset();
         
-        Game.world.player.SetStat(EnumPlayerStats.HEALTH, 100, silent: true);
-        Game.world.player.SetStat(EnumPlayerStats.MENTAL, 100, silent: true);
-        Game.world.player.SetStat(EnumPlayerStats.HUNGER, 100, silent: true);
+        Game.world.player.SetStat(EnumPlayerStats.HEALTH, 50, silent: true);
+        Game.world.player.SetStat(EnumPlayerStats.MENTAL, 50, silent: true);
+        Game.world.player.SetStat(EnumPlayerStats.HUNGER, 50, silent: true);
         Game.world.player.SetStat(EnumPlayerStats.STAMINA, 100, silent: true);
         Game.world.player.SetStat(EnumPlayerStats.THIRST, 100, silent: true);
         Game.world.player.SetStat(EnumPlayerStats.TIME, 0, silent: true);
 
-        subqueue.Add(new GCCall(Game.StartNextDelivery));
+        subqueue.Add(new GCCall(Game.DeliverySetback));
         subqueue.Add(new GCImageHide());
+        subqueue.Add(new GCUIState(UI_STATES.DELIVERY));
     }
 
     public override void Update()

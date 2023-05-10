@@ -1,5 +1,6 @@
 using System;
 using Source.Util;
+using UnityEditor;
 
 public enum AddStatMode
 {
@@ -34,7 +35,7 @@ public class GCAddStat : QueueItemBase
             case AddStatMode.FLOAT_TEXT:
                 break;
             case AddStatMode.FLOAT_TEXT_ALERT:
-                subqueue.Add(new GCAlert(StringUtl.Signed(dlt) + " " + stat));
+                subqueue.Add(new GCAlert(ToString()));
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -60,5 +61,10 @@ public class GCAddStat : QueueItemBase
 
         if (subqueue.IsEmpty())
             Complete();
+    }
+
+    public override string ToString()
+    {
+        return StringUtl.Signed(dlt) + " " + stat;
     }
 }

@@ -22,16 +22,18 @@ namespace Source.Commands
     {
         Sprite narrative;
         bool isInstant;
+        float offY;
         
-        public GCImage(Sprite txt, bool instant = false)
+        public GCImage(Sprite txt, bool instant = false, float offsetY = -138)
         {
             isInstant = instant;
             narrative = txt;
+            offY = offsetY;
         }
         
         public override void Enter()
         {
-            NarrativeImageUI.Show(narrative, isInstant);
+            NarrativeImageUI.Show(narrative, isInstant, offY);
             
             if (isInstant)
             {

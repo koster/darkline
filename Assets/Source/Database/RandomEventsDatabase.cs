@@ -20,7 +20,8 @@ namespace Source.Game.Deliveries
             all.Add(SmallGarden);
             all.Add(BuildingFire);
             all.Add(SmallStream);
-            all.Add(AbandonedCar);
+            // all.Add(AbandonedCar);
+            all.Add(TrashCan);
             all.Add(StrangeNoiseInAlley);
             all.Add(CardboardBoxShelter);
         }
@@ -74,18 +75,17 @@ namespace Source.Game.Deliveries
             q.Add(new GCChoices()
                 .Add("Help the children", (sq) =>
                 {
-                    sq.Add(new GCAddStat(EnumPlayerStats.TIME, 10, AddStatMode.FLOAT_TEXT_ALERT));
                     sq.Add(new GCAddItem(ScavengingItems.GetFoodItem()));
                 })
                 .Add("Ignore the children", (sq) =>
                 {
                     sq.Add(new GCAddStat(EnumPlayerStats.MENTAL, -10, AddStatMode.FLOAT_TEXT_ALERT));
                 })
-                .Add("Shoot the cat", (sq) =>
-                {
-                    sq.Add(new GCAddItem(ItemDatabase.ammo, -1));
-                    sq.Add(new GCQueue(CombatDatabase.Combat_3ChildDemons()));
-                }, new ChoiceCost(EnumItemTag.FIREARM, EnumItemTag.AMMO))
+                // .Add("Shoot the cat", (sq) =>
+                // {
+                //     sq.Add(new GCAddItem(ItemDatabase.ammo, -1));
+                //     sq.Add(new GCQueue(CombatDatabase.Combat_3ChildDemons()));
+                // }, new ChoiceCost(EnumItemTag.FIREARM, EnumItemTag.AMMO))
             );
             return q;
         }
@@ -131,7 +131,8 @@ namespace Source.Game.Deliveries
                 .Add("Hey! Leave them alone!", (sq) =>
                 {
                     sq.Add(new GCQueue(CombatDatabase.Combat_Raiders())); 
-                    sq.Add(new GCAddItem(ItemDatabase.money, 100)); 
+                    sq.Add(new GCAddItem(ItemDatabase.waterBottle, 1)); 
+                    sq.Add(new GCAddItem(ItemDatabase.burger, 1)); 
                 })
                 .Add("It is what it is.", (sq) =>
                 {
@@ -183,9 +184,9 @@ namespace Source.Game.Deliveries
             var q = new GameQueue.GameQueue();
             q.Add(new GCNarrative("You find a small stream with fresh water."));
             q.Add(new GCChoices()
-                .Add("Drink some of this obviously safe water in the middle of the cursed city", (sq) =>
+                .Add("Drink some of this obviously safe water", (sq) =>
                 {
-                    sq.Add(new GCAddStat(EnumPlayerStats.THIRST, 30, AddStatMode.FLOAT_TEXT_ALERT));
+                    sq.Add(new GCAddStat(EnumPlayerStats.THIRST, 50, AddStatMode.FLOAT_TEXT_ALERT));
                     sq.Add(new GCAddStat(EnumPlayerStats.MENTAL, -10, AddStatMode.FLOAT_TEXT_ALERT));
                     sq.Add(new GCAddStat(EnumPlayerStats.HEALTH, -10, AddStatMode.FLOAT_TEXT_ALERT));
                     sq.Add(new GCAddStat(EnumPlayerStats.STAMINA, -10, AddStatMode.FLOAT_TEXT_ALERT));
@@ -197,6 +198,7 @@ namespace Source.Game.Deliveries
             );
             return q;
         }
+        
         public static GameQueue.GameQueue AbandonedCar()
         {
             var q = new GameQueue.GameQueue();
@@ -207,7 +209,6 @@ namespace Source.Game.Deliveries
                     sq.Add(new GCAddStat(EnumPlayerStats.MENTAL, -10, AddStatMode.FLOAT_TEXT_ALERT));
                     sq.Add(new GCAddStat(EnumPlayerStats.HEALTH, -10, AddStatMode.FLOAT_TEXT_ALERT));
                     sq.Add(new GCAddStat(EnumPlayerStats.STAMINA, -10, AddStatMode.FLOAT_TEXT_ALERT));
-                    sq.Add(new GCAddStat(EnumPlayerStats.TIME, 50, AddStatMode.FLOAT_TEXT_ALERT));
                     sq.Add(new GCAddItem(ScavengingItems.GetToolItem())); 
                 })
                 .Add("Rob the trunk quickly", (sq) =>
@@ -217,16 +218,36 @@ namespace Source.Game.Deliveries
             );
             return q;
         }
+        
+        public static GameQueue.GameQueue TrashCan()
+        {
+            var q = new GameQueue.GameQueue();
+            q.Add(new GCNarrative("You come across a trash can."));
+            q.Add(new GCChoices()
+                .Add("Search it.", (sq) =>
+                {
+                    sq.Add(new GCAlert("It is disgusting."));
+                    sq.Add(new GCAddStat(EnumPlayerStats.MENTAL, -10));
+                    sq.Add(new GCAddItem(ScavengingItems.GetRandomTrashItem()));
+                })
+                .Add("Leave it.", (sq) =>
+                {
+                    sq.Add(new GCAddStat(EnumPlayerStats.MENTAL, +10));
+                })
+            );
+            return q;
+        }
+        
         public static GameQueue.GameQueue StrangeNoiseInAlley()
         {
             var q = new GameQueue.GameQueue();
             q.Add(new GCNarrative("You hear a strange noise coming from a nearby alleyway."));
             q.Add(new GCChoices()
-                .Add("Nope. Hell nope.", (sq) =>
+                .Add("Walk past.", (sq) =>
                 {
-                    sq.Add(new GCAddStat(EnumPlayerStats.MENTAL, 1, AddStatMode.FLOAT_TEXT_ALERT));
+                    sq.Add(new GCAddStat(EnumPlayerStats.MENTAL, 5, AddStatMode.FLOAT_TEXT_ALERT));
                 })
-                .Add("Be stupid and check what it is there", (sq) =>
+                .Add("Investigate.", (sq) =>
                 {
                     sq.Add(new GCQueue(CombatDatabase.Combat_StrangeNoiseEnemies())); 
                 })
