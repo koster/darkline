@@ -33,7 +33,7 @@ public class InventoryActionButton : MonoBehaviour
     void Update()
     {
         cooldown -= Time.deltaTime;
-        component.interactable = cooldown < 0;
+        component.interactable = cooldown < 0 && !NarrativeBoxUI.IsWriting();
     }
 
     void OnClick()

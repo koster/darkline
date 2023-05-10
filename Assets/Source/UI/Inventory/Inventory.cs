@@ -94,6 +94,17 @@ public class InventoryModel
     {
         queue = Game.contextQueue;
         
+        var actionExamine = new InventoryActionModel
+        {
+            name = "EXAMINE"
+        };
+        
+        actionExamine.callback = (btn, icm) =>
+        {
+            GameAnalytics.NewDesignEvent("examine_item_inv" + icm.definition.name);
+            queue.Add(new GCQueue(icm.definition.OnExamine()));
+        };
+        
         var actionUse = new InventoryActionModel
         {
             name = "USE"
@@ -131,8 +142,13 @@ public class InventoryModel
                 definition = i.definition,
                 count = i.amount
             };
+            
             if (i.definition.OnUse != null)
                 item.actions.Add(actionUse);
+            
+            if (i.definition.OnExamine != null)
+                item.actions.Add(actionExamine);
+            
             content.Add(item);
         }
     }

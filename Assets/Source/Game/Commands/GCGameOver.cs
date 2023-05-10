@@ -10,7 +10,6 @@ public class GCGameOver : QueueItemBase
         GameAnalytics.NewDesignEvent("game_over");
 
         Game.contextQueue.Flush();
-        Game.phases.Flush();
 
         UIState.DoState(UI_STATES.NARRATIVE_ONLY);
         Game.contextQueue.Add(new GCImage(null));

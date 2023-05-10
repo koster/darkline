@@ -74,16 +74,14 @@ public class Inventory
 
     public bool HasItem(InventoryItemDefinition iid)
     {
-        if (!iid.stackable)
-        {
-            foreach (var f in items)
-            {
-                if (f.definition == iid)
-                    return true;
-            }
-        }
+        if (iid.stackable)
+            return GetOrCreateItem(iid).amount > 0;
         
-        return GetOrCreateItem(iid).amount > 0;
+        foreach (var i in items)
+            if (i.definition == iid && i.amount > 0)
+                return true;
+
+        return false;
     }
 
     public int GetItemAmount(InventoryItemDefinition money)

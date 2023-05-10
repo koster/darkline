@@ -10,7 +10,10 @@ public class InventoryItemDefinition
     public Sprite icon;
     public string name;
     public string desc;
+    
     public Func<GameQueue> OnUse;
+    public Func<GameQueue> OnExamine;
+    
     public bool stackable;
     public bool hidden;
     public WeaponActionDefinition weaponAction;
@@ -298,7 +301,7 @@ public static class ItemDatabase
         burger.desc = "A slightly charred, yet appetizing burger with a juicy beef patty nestled between two soft buns. Topped with wilted lettuce and a hint of a mysterious sauce. Surprisingly satisfying in this grim reality.";
         burger.OnUse = () => new GameQueue()
             .Add(new GCNarrative("You take a bite of the burger. It's juicy and delicious."))
-            .Add(new GCAddStat(EnumPlayerStats.HUNGER, 30, AddStatMode.FLOAT_TEXT_ALERT));
+            .Add(new GCAddStat(EnumPlayerStats.HUNGER, 50, AddStatMode.FLOAT_TEXT_ALERT));
         
         lunch = all.New();
         lunch.name = "Lunch";
@@ -420,7 +423,11 @@ public static class ItemDatabase
         suitcase.name = "Suitcase";
         suitcase.icon = "items/suitcase".LoadSprite();
         suitcase.desc = "An enigmatic, black suitcase with a sleek and sturdy exterior, locked tight with a combination mechanism. Entrusted to you by a solemn officer, the case was given to you with explicit instructions to deliver it, though its contents and purpose remain shrouded in mystery. ";
-
+        suitcase.OnExamine = () => new GameQueue()
+            .Add(new GCNarrative("What am I doing with this?"))
+            .Add(new GCNarrative("What is that phone?"))
+            .Add(new GCNarrative("You don't know, but you're naturally curious."));
+        
         shotgun = all.New();
         shotgun.name = "Shotgun";
         shotgun.icon = "items/shotgun".LoadSprite();
@@ -430,7 +437,12 @@ public static class ItemDatabase
         letter.name = "Letter";
         letter.icon = "items/letter".LoadSprite();
         letter.desc = "An unsent, folded letter addressed to Lieutenant Redcliff, a military friend from times past. The earnest words within speak of camaraderie, hope, and an urgent plea to reconsider a tragic decision. The unsent envelope bears witness to the unfortunate timing of its delivery.";
-
+        letter.OnExamine = () => new GameQueue()
+            .Add(new GCNarrative("Your response to Red."))
+            .Add(new GCNarrative("You never sent it."))
+            .Add(new GCNarrative("How could you?"))
+            .Add(new GCNarrative("You don't know. You just hope it's not too late."));
+        
         powder = all.New();
         powder.name = "Powder";
         powder.icon = "items/powder".LoadSprite();
@@ -440,11 +452,20 @@ public static class ItemDatabase
         medal.name = "Medal of Honor";
         medal.icon = "items/medal".LoadSprite();
         medal.desc = "A once-prestigious military decoration, now dulled and worn from the passage of time. This medal was awarded for acts of valor and bravery in the face of overwhelming odds, but its faded glory now serves as a haunting reminder of the sacrifices made by you and your comrades. Its presence evokes a mix of pride and sorrow, stirring both determination and a sense of loss.";
-
+        medal.OnExamine = () => new GameQueue()
+            .Add(new GCNarrative("Your medal of honor."))
+            .Add(new GCNarrative("You have mixed feelings about it."))
+            .Add(new GCNarrative("On one hand, you feel the recognition."))
+            .Add(new GCNarrative("On the other hand, there is no honor in war."));
+        
         ring = all.New();
         ring.name = "Golden Ring";
         ring.icon = "items/wedding_ring".LoadSprite();
         ring.desc = "A once-shining wedding band, now slightly tarnished by time and the harrowing experiences you've endured. This ring, unmistakably yours, stirs memories of a love long lost, echoing the whispers of a distant past. Its presence serves as a bittersweet reminder of the love and commitment that still lingers in your heart, fueling your determination to uncover the truth and find solace.";
+        ring.OnExamine = () => new GameQueue()
+            .Add(new GCNarrative("Your wedding ring."))
+            .Add(new GCNarrative("You've decided to give it back to Emily instead of pawning it."))
+            .Add(new GCNarrative("It makes some sense in your head. You want closure"));
         
         pills = all.New();
         pills.name = "Pills";
@@ -455,6 +476,11 @@ public static class ItemDatabase
         blood.name = "Blood";
         blood.icon = "items/demon_blood".LoadSprite();
         blood.desc = "A small glass vial containing a disturbing mixture of crimson liquid and a viscous black goo. The unsettling realization that this may be your own blood raises questions about how it was collected and the origin of the mysterious black substance.";
+        blood.OnExamine = () => new GameQueue()
+            .Add(new GCNarrative("A vial of your blood."))
+            .Add(new GCNarrative("It was given to you by a field medic after you've had a gunshot wound and passed out."))
+            .Add(new GCNarrative("You've kept it, as a reminder of that day, you nearly died."))
+            .Add(new GCNarrative("Memento mori."));
     }
 
     public static InventoryItemDefinition dust;

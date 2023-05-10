@@ -33,11 +33,6 @@ public class Delivery
             
             ConsumeResources(walk);
 
-            if (position >= definition.length)
-            {
-                isReached = true;
-            }
-
             isScavengable = definition.scavengingChance.Roll();
             
             Game.contextQueue.Add(new GCAnimateDeliveryProgress());
@@ -59,6 +54,11 @@ public class Delivery
                     Game.contextQueue.Add(new GCQueue(timeline.queue()));
                 }
             }
+        }
+
+        if (position >= definition.length)
+        {
+            isReached = true;
         }
     }
 

@@ -146,7 +146,7 @@ namespace Source.Game.Deliveries
             var q = new GameQueue.GameQueue();
             q.Add(new GCNarrative("You come across a small garden with some fresh vegetables growing."));
             q.Add(new GCChoices()
-                .Add("Communism time", (sq) =>
+                .Add("Steal them.", (sq) =>
                 {
                     sq.Add(new GCAddItem(ItemDatabase.tomatoes, 5)); 
                 })

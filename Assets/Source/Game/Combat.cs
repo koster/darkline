@@ -527,13 +527,16 @@ class GCCombatDealDamage : QueueItemBase
     {
         base.Enter();
 
-        if (_item.weaponAction.missChance.Roll())
+        if (_item != null)
         {
-            subqueue.Add(new GCNarrative("You miss!"));
-            subqueue.Add(new GCCall(Complete));
-            return;
+            if (_item.weaponAction.missChance.Roll())
+            {
+                subqueue.Add(new GCNarrative("You miss!"));
+                subqueue.Add(new GCCall(Complete));
+                return;
+            }
         }
-        
+
         var special = DamageSpecial.NORMAL;
         
         if (_enmy.statuses.Contains(CombatStatus.VULNERABLE))

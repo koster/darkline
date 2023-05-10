@@ -93,7 +93,7 @@ public static class Story_Scavenging
             {
                 queue.Add(new GCNarrative("You found a few locked lockers, but you managed to break in."));
                 queue.Add(new GCAddItem(ScavengingItems.GetFoodItem()));
-                queue.Add(new GCAddItem(ItemDatabase.money, Random.Range(50, 100)));
+                queue.Add(new GCAddItem(ScavengingItems.GetFoodItem()));
             }, new ChoiceCost { stamina = 10 })
             .Add("Break in to director room", queue =>
             {
@@ -112,7 +112,6 @@ public static class Story_Scavenging
             .Add("Look around", queue =>
             {
                 queue.Add(new GCNarrative("The place is dark and damp."));
-                queue.Add(new GCAddItem(ItemDatabase.money, Random.Range(10, 20)));
                 queue.Add(new GCAddItem(ItemDatabase.waterBottle, 1));
             }, new ChoiceCost { stamina = 5 })
             .Add("Break in to maintenance room", queue =>
@@ -366,13 +365,13 @@ public static class ScavengingItems
             new(ItemDatabase.dust, 1)
         };
 
-        if (Game.world.player.GetStat(EnumPlayerStats.THIRST) == 0)
+        if (Game.world.player.GetStat(EnumPlayerStats.THIRST) <= 10)
             return new(ItemDatabase.waterBottle, 1);
-        if (Game.world.player.GetStat(EnumPlayerStats.HUNGER) == 0)
+        if (Game.world.player.GetStat(EnumPlayerStats.HUNGER) <= 10)
             return new(ItemDatabase.burger, 1);
-        if (Game.world.player.GetStat(EnumPlayerStats.MENTAL) == 0)
+        if (Game.world.player.GetStat(EnumPlayerStats.MENTAL) <= 10)
             return new(ItemDatabase.tranquilizers, 1);
-        if (Game.world.player.GetStat(EnumPlayerStats.HEALTH) < 10)
+        if (Game.world.player.GetStat(EnumPlayerStats.HEALTH) <= 10)
             return new(ItemDatabase.tranquilizers, 1);
             
         

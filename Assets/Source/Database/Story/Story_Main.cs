@@ -18,6 +18,8 @@ namespace Source.Game.Deliveries
             q.Add(new GCTintBackground(Color.black, 2f));
             q.Add(new GCImage("narrative/vending_machine".LoadSprite()));
 
+            q.Add(new GCCall(DeliveryUI.Reset));
+            
             var lines = new List<string>()
             {
                 "You see an ominous vending machine on the street corner.", 
@@ -39,12 +41,14 @@ namespace Source.Game.Deliveries
 
             var vend1 = new List<InventoryItemDefinition> { ItemDatabase.beer,              ItemDatabase.painkillers,  ItemDatabase.burger      };
             var vend2 = new List<InventoryItemDefinition> { ItemDatabase.bandage,           ItemDatabase.vape,         ItemDatabase.waterBottle };
-            var vend3 = new List<InventoryItemDefinition> { ItemDatabase.crowbar,           ItemDatabase.cannedCoffee, ItemDatabase.apple       };
+            var vend3 = new List<InventoryItemDefinition> { ItemDatabase.crowbar,           ItemDatabase.cannedCoffee, ItemDatabase.painkillers };
             var vend4 = new List<InventoryItemDefinition> { ItemDatabase.tranquilizers,     ItemDatabase.energyDrink,  ItemDatabase.lunch       };
 
             var vendingByDeliver = new List<List<InventoryItemDefinition>> { vend1, vend2, vend3, vend4 };
             
             Vend(q, vendingByDeliver.GetSafely(global::Game.world.deliveryIndex));
+            
+            q.Add(new GCUIState(UI_STATES.NARRATIVE_ONLY));
             
             q.Add(new GCImageHide());
 
@@ -53,7 +57,7 @@ namespace Source.Game.Deliveries
 
         static void Vend(GameQueue.GameQueue q, List<InventoryItemDefinition> inventoryItemDefinitions)
         {
-            var gc = new GCChoices(UI_STATES.PICK_OPTION_NO_STATS);
+            var gc = new GCChoices(UI_STATES.PICK_OPTION);
             foreach (var v in inventoryItemDefinitions)
             {
                 gc.Add(v.name, sq =>
@@ -123,18 +127,19 @@ namespace Source.Game.Deliveries
                 }).DoesNotExit()
                 .Add("Go back to the car.", (q) =>
                 {
-                    q.Add(new GCNarrative("You go back to the car."));
                     q.Add(new GCNarrative("On your way, you see something glittering in the leaves."));
                     q.Add(new GCNarrative("A coin?"));
                     q.Add(new GCImage("items/coin".LoadSprite(), offsetY: 0));
                     q.Add(new GCNarrative("Strange one... Is this a pentagram?"));
-                    q.Add(new GCNarrative("You kept it."));
                 }));
 
-            q.Add(new GCImage("narrative/hometown_4".LoadSprite(), offsetY: 0));
+            // q.Add(new GCImage("narrative/hometown_4".LoadSprite(), offsetY: 0));
             
-            q.Add(new GCNarrative("The weather is not quiet rainy, but it's damp, it's early morning."));
-            q.Add(new GCNarrative("You get inside your car and start the engine."));
+            // q.Add(new GCNarrative("The weather is not quiet rainy, but it's damp, it's early morning."));
+            // q.Add(new GCNarrative("You get inside your car and start the engine."));
+            
+            q.Add(new GCImage(null, instant: true, offsetY: 0));
+            q.Add(new GCTintBackground(Color.black, 0f));
             
             q.Add(new GCSound("sound/car_engine"));
             q.Add(new GCWait(3f));
@@ -154,15 +159,13 @@ namespace Source.Game.Deliveries
             q.Add(new GCTintBackground(Color.black, 1f));
             q.Add(new GCUIState(UI_STATES.NARRATIVE_ONLY));
             
-            q.Add(new GCNarrative("You reach the town. But you're running out of gas."));
-            q.Add(new GCNarrative("You see a gas station, and you stop to refill."));
+            // q.Add(new GCNarrative("You reach the town. But you're running out of gas."));
+            // q.Add(new GCNarrative("You see a gas station, and you stop to refill."));
             
-            q.Add(new GCImage("narrative/gas_station".LoadSprite(), offsetY: 0));
+            // q.Add(new GCImage("narrative/gas_station".LoadSprite(), offsetY: 0));
             
-            q.Add(new GCNarrative("Everything is closed."));
-            q.Add(new GCNarrative("John: Damn. What is this?"));
+            q.Add(new GCNarrative("Some time later."));
             q.Add(new GCNarrative("The gas station looks like it's been abandoned... Years ago."));
-            q.Add(new GCNarrative("John: I guess I'll have to walk, well, at least I'm not lost in the middle of nowhere."));
 
             q.Add(new GCSound("sound/phone_vibrate", 0.25f));
 
@@ -172,10 +175,6 @@ namespace Source.Game.Deliveries
             q.Add(new GCImage("narrative/vending_machine".LoadSprite()));
 
             q.Add(new GCNarrative("The phone is vibrating inside the vending machine..."));
-
-            q.Add(new GCNarrative("John: Is this some kind of a prank?"));
-
-            q.Add(new GCNarrative("The phone keeps vibrating..."));
 
             q.Add(new GCSound("sound/phone_vibrate", 0.25f));
             
@@ -209,8 +208,6 @@ namespace Source.Game.Deliveries
             q.Add(new GCNarrative("Phone: *crackling*"));
             q.Add(new GCNarrative("Phone: Good morning John."));
             
-            q.Add(new GCNarrative("Phone: John?"));
-            
             q.Add(new GCNarrative("John: How do you know my name?"));
 
             q.Add(new GCNarrative("Phone: We've been waiting for you, John."));
@@ -221,15 +218,13 @@ namespace Source.Game.Deliveries
             q.Add(new GCImageHide());
             
             q.Add(new GCNarrative("Phone: Darkline."));
-            q.Add(new GCNarrative("Phone: You need to make a delivery."));
-
             q.Add(new GCNarrative("John: What?"));
             
             q.Add(new GCSound("sound/buzz"));
             q.Add(new GCNarrative("Phone: *crackling*"));
             
             q.Add(new GCNarrative("Phone: The suitcase is in your car."));
-
+            q.Add(new GCNarrative("Phone: You need to make a delivery."));
             q.Add(new GCNarrative("Phone: Deliver the suitcase to the Hospital, 33rd street."));
             q.Add(new GCNarrative("Phone: You will receive new instructions after this delivery."));
             
@@ -238,12 +233,8 @@ namespace Source.Game.Deliveries
 
             q.Add(new GCSound("sound/car_signal"));
             
-            q.Add(new GCNarrative("You found a suitcase."));
-            
             q.Add(new GCImage("items/suitcase".LoadSprite()));
             
-            q.Add(new GCNarrative("It's sturdy a black suitcase with a passcode lock."));
-            q.Add(new GCNarrative("You've seen such on the military bases before, they are used to transport classified documents."));
             q.Add(new GCNarrative("Is this some type of spy operation?"));
             
             q.Add(new GCImageHide());
@@ -358,29 +349,25 @@ namespace Source.Game.Deliveries
             q.Add(new GCNarrative("Man: Oh, John. Have you finished wasting your time on madness and decided to show some care."));
             q.Add(new GCNarrative("Man: I hope this new skill will be useful to you. But here, I taking care of her for a long time."));
 
-            var husband = "Man";
-            
             q.Add(new GCChoices(UI_STATES.PICK_OPTION_NO_STATS)
                 .Add("Why are you coughing Emily?", (q) =>
                 {
-                    q.Add(new GCNarrative("Emily: John... Again?"));
-                    q.Add(new GCNarrative("Emily: This is Damian, my new husband."));
-                    q.Add(new GCNarrative("Emily: We divorced years ago..."));
-                    q.Add(new GCNarrative("Emily: What is it with you?"));
+                    q.Add(new GCNarrative("Emily: Yeah."));
                     q.Add(new GCNarrative("Emily: *cough*"));
-
-                    husband = "Damian";
-                    
-                    q.Add(new GCNarrative("Damian: We've had enough John!"));
-                    q.Add(new GCNarrative("Damian: Give me the medicine!"));
+                    q.Add(new GCNarrative("Emily: I've got sick a few years ago."));
+                    q.Add(new GCNarrative("Emily: They say it has something to do with that military base you were stationed at."));
+                    q.Add(new GCNarrative("Emily: But it's a long story, we couldn't prove anything..."));
                 }).DoesNotExit()
-                .Add("Give him the vial.", (q) =>
+                .Add("Give her the ring.", (q) =>
                 {
-                    q.Add(new GCNarrative("You pass the vial."));
+                    q.Add(new GCNarrative("You pass Emily the ring."));
+                    q.Add(new GCNarrative("She takes it and you see a tear forming in her eyes."));
                 }));
 
-            q.Add(new GCNarrative($"{husband}: For the love of good, stop stressing about this lunatic, or you'll get worse!"));
-            q.Add(new GCNarrative($"{husband}: You're still here John?!"));
+            q.Add(new GCNarrative("Man: We've had enough John!"));
+            q.Add(new GCNarrative("Man: For the love of good, stop stressing about this lunatic, or you'll get worse!"));
+            q.Add(new GCNarrative("Man: You're still here John?!"));
+            q.Add(new GCNarrative("Man: Ok you've got what you wanted, now leave!"));
             
             q.Add(new GCImage(null));
             
@@ -410,12 +397,8 @@ namespace Source.Game.Deliveries
             q.Add(new GCNarrative("Phone: No."));
             q.Add(new GCNarrative("Phone: It's the darkline."));
             q.Add(new GCNarrative("John: Darkline?"));
-            q.Add(new GCNarrative("Phone: Are you in your car?"));
-            q.Add(new GCNarrative("John: Yes, it was parked around the house somehow."));
-            q.Add(new GCNarrative("Phone: Check under the drivers seat."));
-            q.Add(new GCWait(1f));
-            q.Add(new GCNarrative("You pull out a letter."));
-            q.Add(new GCNarrative("Phone: You know what to do with it."));
+            q.Add(new GCNarrative("Phone: Go to Redcliff now."));
+            q.Add(new GCNarrative("Phone: He knows."));
             
             return q;
         }
@@ -551,6 +534,7 @@ namespace Source.Game.Deliveries
             
             q.Add(new GCNarrative("Phone: No."));
             q.Add(new GCNarrative("Phone: You have a new delivery to make."));
+            q.Add(new GCNarrative("Phone: You must keep going."));
 
             return q;
         }
