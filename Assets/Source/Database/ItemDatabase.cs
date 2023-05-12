@@ -384,7 +384,7 @@ public static class ItemDatabase
 
         energyDrink = all.New();
         energyDrink.name = "Energy Drink";
-        energyDrink.icon = "items/energy_drink".LoadSprite();
+        energyDrink.icon = "items/energydrink".LoadSprite();
         energyDrink.desc = "Boosts stamina and reduces hunger";
         energyDrink.stackable = true;
         energyDrink.OnUse = () => new GameQueue()

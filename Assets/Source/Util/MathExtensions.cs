@@ -36,6 +36,14 @@ namespace Source.Util
             return v[Random.Range(0, v.Count)];
         }
         
+        public static T PopRandom<T>(this List<T> v)
+        {
+            var idx = Random.Range(0, v.Count);
+            var popRandom = v[idx];
+            v.RemoveAt(idx);
+            return popRandom;
+        }
+        
         public static T GetSafely<T>(this List<T> v, int n)
         {
             if (v.Count == 0)

@@ -16,14 +16,14 @@ namespace Source.Game.Deliveries
             all.Add(ChildrenWithACat);
             all.Add(DisfiguredBicycleCorpse);
             all.Add(PileOfTrash);
-            all.Add(RaidersHarassingLocals);
+            // all.Add(RaidersHarassingLocals);
             all.Add(SmallGarden);
-            all.Add(BuildingFire);
+            // all.Add(BuildingFire);
             all.Add(SmallStream);
             // all.Add(AbandonedCar);
             all.Add(TrashCan);
             all.Add(StrangeNoiseInAlley);
-            all.Add(CardboardBoxShelter);
+            // all.Add(CardboardBoxShelter);
         }
 
         public static GameQueue.GameQueue MeetHomelessPerson()

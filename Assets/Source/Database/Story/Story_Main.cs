@@ -831,7 +831,7 @@ namespace Source.Game.Deliveries
                 .Add("Tell them the coordinates", (q) =>
                 {
                     q.Add(new GCTintBackground(Color.white, 1f));
-
+                    
                     q.Add(new GCNarrative("You've told them the coordinates."));
                     
                     q.Add(new GCNarrative("Profressor: You're a true hero, John!"));
@@ -853,6 +853,10 @@ namespace Source.Game.Deliveries
                 })
                 .Add("No", (q) =>
                 {
+                    q.Add(new GCNarrative("John: This dies with me."));
+                    q.Add(new GCNarrative("John: I cannot let the Darkline be found."));
+                    q.Add(new GCNarrative("John: It doesn't matter."));
+                    
                     q.Add(new GCTintBackground(Color.black, 1f));
 
                     q.Add(new GCNarrative("Profressor: You're a fool John..."));
@@ -863,11 +867,19 @@ namespace Source.Game.Deliveries
                     q.Add(new GCNarrative("John: It is my decision"));
 
                     q.Add(new GCNarrative("Profressor: Goodbye John."));
-                    q.Add(new GCImage(null));
+                    q.Add(new GCImage("narrative/field_hospital".LoadSprite()));
 
                     q.Add(new GCNarrative("You feel your consciousness fading..."));
 
+                    q.Add(new GCSound("sound/guitar_noise_5", 0.25f));
+                    
+                    q.Add(new GCNarrative("Profressor: Another one gone..."));
+                    q.Add(new GCNarrative("Profressor: This was particularly interesting though."));
+                    q.Add(new GCNarrative("Profressor: Such a such a peculiar story."));
+                    
                     q.Add(new GCSound("sound/flatline"));
+                    
+                    q.Add(new GCNarrative("Profressor: Bring in the next one."));
 
                     q.Add(new GCImage("narrative/credits".LoadSprite()));
                 }));

@@ -115,7 +115,7 @@ namespace Source.Game.Deliveries
                     new()
                     {
                         at = 1,
-                        queue = ScavengingEventsDatabase.all.GetRandom()
+                        queue = ScavengingEventsDatabase.all.PopRandom()
                     },
                     new()
                     {
@@ -140,12 +140,12 @@ namespace Source.Game.Deliveries
                     new()
                     {
                         at = 7,
-                        queue = ScavengingEventsDatabase.all.GetRandom()
+                        queue = ScavengingEventsDatabase.all.PopRandom()
                     },
                     new()
                     {
                         at = 10,
-                        queue = ScavengingEventsDatabase.all.GetRandom()
+                        queue = ScavengingEventsDatabase.all.PopRandom()
                     }
                 },
                 introPoint = Story_Main.Delivery2_FriendIntro,
@@ -165,7 +165,7 @@ namespace Source.Game.Deliveries
                     new()
                     {
                         at = 1,
-                        queue = ScavengingEventsDatabase.all.GetRandom()
+                        queue = ScavengingEventsDatabase.all.PopRandom()
                     },
                     new()
                     {
@@ -175,7 +175,7 @@ namespace Source.Game.Deliveries
                     new()
                     {
                         at = 3,
-                        queue = RandomEventsDatabase.all.GetRandom()
+                        queue = RandomEventsDatabase.all.PopRandom()
                     },
                     new()
                     {
@@ -190,12 +190,12 @@ namespace Source.Game.Deliveries
                     new()
                     {
                         at = 10,
-                        queue = RandomEventsDatabase.all.GetRandom()
+                        queue = RandomEventsDatabase.all.PopRandom()
                     },
                     new()
                     {
                         at = 11,
-                        queue = ScavengingEventsDatabase.all.GetRandom()
+                        queue = ScavengingEventsDatabase.all.PopRandom()
                     }
                 },
                 introPoint = Story_Main.Delivery3_MilitaryIntro,
@@ -226,7 +226,7 @@ namespace Source.Game.Deliveries
                     new()
                     {
                         at = 3,
-                        queue = RandomEventsDatabase.all.GetRandom()
+                        queue = RandomEventsDatabase.all.PopRandom()
                     },
                     new()
                     {
@@ -236,12 +236,12 @@ namespace Source.Game.Deliveries
                     new()
                     {
                         at = 8,
-                        queue = RandomEventsDatabase.all.GetRandom()
+                        queue = RandomEventsDatabase.all.PopRandom()
                     },
                     new()
                     {
                         at = 10,
-                        queue = RandomEventsDatabase.all.GetRandom()
+                        queue = RandomEventsDatabase.all.PopRandom()
                     }
                 },
                 introPoint = Story_Main.Delivery4_SelfIntro,

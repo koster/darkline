@@ -78,7 +78,7 @@ public class GameWorld
         
         // Game.contextQueue.Add(new GCQueue(Story_Main.VendingMachine()));
         
-        Game.contextQueue.Add(new GCQueue(Story_Main.Intro()));
+        // Game.contextQueue.Add(new GCQueue(Story_Main.Delivery4_SelfOutro()));
 
         // #if UNITY_EDITOR
         //
