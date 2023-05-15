@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Source.Commands;
-using Source.GameQueue;
 using Source.Util;
 using UnityEngine;
 
@@ -8,7 +7,7 @@ namespace Source.Game.Deliveries
 {
     public static class Story_Main
     {
-        public static GameQueue.GameQueue VendingMachine()
+        public static GameQueue.GameQueue VendingMachine(bool tutorial = false)
         {
             var q = new GameQueue.GameQueue();
 
@@ -20,8 +19,9 @@ namespace Source.Game.Deliveries
 
             q.Add(new GCCall(DeliveryUI.Reset));
             
-            var lines = new List<string>()
+            var lines = new List<string>
             {
+                "You look around and notice a vending machine...",
                 "You see an ominous vending machine on the street corner.", 
                 "This vending machine again.", 
                 "You stumble upon a familliar vending machine.", 
@@ -39,14 +39,19 @@ namespace Source.Game.Deliveries
              * stamina hunger health
              */
 
+            var vend0 = new List<InventoryItemDefinition> { ItemDatabase.knife,             ItemDatabase.bandage,      ItemDatabase.waterBottle };
             var vend1 = new List<InventoryItemDefinition> { ItemDatabase.beer,              ItemDatabase.painkillers,  ItemDatabase.burger      };
             var vend2 = new List<InventoryItemDefinition> { ItemDatabase.bandage,           ItemDatabase.vape,         ItemDatabase.waterBottle };
             var vend3 = new List<InventoryItemDefinition> { ItemDatabase.crowbar,           ItemDatabase.cannedCoffee, ItemDatabase.painkillers };
             var vend4 = new List<InventoryItemDefinition> { ItemDatabase.tranquilizers,     ItemDatabase.energyDrink,  ItemDatabase.lunch       };
 
-            var vendingByDeliver = new List<List<InventoryItemDefinition>> { vend1, vend2, vend3, vend4 };
+            if (tutorial)
+                vend1 = vend0;
             
-            Vend(q, vendingByDeliver.GetSafely(global::Game.world.deliveryIndex));
+            var vendingByDeliver = new List<List<InventoryItemDefinition>> { vend1, vend2, vend3, vend4 };
+
+            var pickOption = global::Game.world.deliveryIndex == 0 ? UI_STATES.PICK_OPTION_NO_STATS : UI_STATES.PICK_OPTION;
+            Vend(q, vendingByDeliver.GetSafely(global::Game.world.deliveryIndex), pickOption);
             
             q.Add(new GCUIState(UI_STATES.NARRATIVE_ONLY));
             
@@ -55,9 +60,9 @@ namespace Source.Game.Deliveries
             return q;
         }
 
-        static void Vend(GameQueue.GameQueue q, List<InventoryItemDefinition> inventoryItemDefinitions)
+        static void Vend(GameQueue.GameQueue q, List<InventoryItemDefinition> inventoryItemDefinitions, UI_STATES pickOption)
         {
-            var gc = new GCChoices(UI_STATES.PICK_OPTION);
+            var gc = new GCChoices(pickOption);
             foreach (var v in inventoryItemDefinitions)
             {
                 gc.Add(v.name, sq =>
@@ -166,20 +171,19 @@ namespace Source.Game.Deliveries
             
             q.Add(new GCNarrative("Some time later."));
             q.Add(new GCNarrative("The gas station looks like it's been abandoned... Years ago."));
-
+            
+            q.Add(new GCQueue(VendingMachine(tutorial: true)));
+            
             q.Add(new GCSound("sound/phone_vibrate", 0.25f));
 
             q.Add(new GCNarrative("You hear a phone vibrating. But you don't have one."));
-            q.Add(new GCNarrative("You look around and notice a vending machine..."));
 
             q.Add(new GCImage("narrative/vending_machine".LoadSprite()));
 
             q.Add(new GCNarrative("The phone is vibrating inside the vending machine..."));
+            q.Add(new GCNarrative("It falls out."));
 
             q.Add(new GCSound("sound/phone_vibrate", 0.25f));
-            
-            q.Add(new GCNarrative("You remember that coin..."));
-            q.Add(new GCNarrative("You toss the coin into the vending machine."));
 
             q.Add(new GCSound("sound/coin_vending", 0.25f));
             

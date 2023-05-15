@@ -43,58 +43,14 @@ public class GameWorld
 
         inventory.Give(ItemDatabase.waterBottle, 2);
         inventory.Give(ItemDatabase.painkillers, 1);
+        inventory.Give(ItemDatabase.coin, 1);
 
         inventory.Give(ItemDatabase.fist, 1);
-
-        // inventory.Give(ItemDatabase.rustyPipe, 1);
-        // inventory.Give(ItemDatabase.plankOfWood, 1);
-        // inventory.Give(ItemDatabase.knife, 1);
-        // inventory.Give(ItemDatabase.holyWater, 1);
-
-        // inventory.Give(ItemDatabase.dust, 1);
-
-        // inventory.Give(ItemDatabase.fist, 1);
-        // inventory.Give(ItemDatabase.rustyPipe, 1);
-        // inventory.Give(ItemDatabase.plankOfWood, 1);
-        // inventory.Give(ItemDatabase.pistol, 1);
-        // inventory.Give(ItemDatabase.rifle, 1);
-        // inventory.Give(ItemDatabase.pileOfDust, 1);
-        // inventory.Give(ItemDatabase.chewingTobacco, 1);
-
-        // intro +
-        // 0     + n/a/ 
-        // 1     + wooden plank
-        // 2     + rusty pipe
-        // 3     + knife
-        // 4     + pistol
-        // out   ?
 
         UIState.DoState(UI_STATES.NOTHING);
         Game.world.deliveryIndex = 0;
         
-        // Game.contextQueue.Add(new GCQueue(Story_Main.VendingMachine()));
-
-        // Game.contextQueue.Add(new GCQueue(Story_Scavenging.Cemetery()));
-        
-        // Game.contextQueue.Add(new GCQueue(Story_Main.VendingMachine()));
-        
-        // Game.contextQueue.Add(new GCQueue(Story_Main.Delivery4_SelfOutro()));
-
-        // #if UNITY_EDITOR
-        //
-        // Game.contextQueue.Add(new GCAcceptDelivery());
-        // Game.contextQueue.Add(new GCAcceptDelivery());
-        //
-        // #endif
-        
-        // Game.contextQueue.Add(new GCQueue(Story_Main.Delivery4_SelfIntro()));
-
-        // Game.contextQueue.Add(new GCQueue(Story_Deliveries.Delivery_04()));
-        // Game.contextQueue.Add(new GCQueue(Story_Atmosphere.FindKnife()));
-        // Game.contextQueue.Add(new GCQueue(CombatDatabase.Danger_CombatBleeder()));
-        // Game.contextQueue.Add(new GCQueue(CombatDatabase.TestCombat()));
-        // Game.contextQueue.Add(new GCQueue(Story_Introduction.HomelessMan_Event()));
-        // Game.contextQueue.Add(new GCQueue(Story_Deliveries.Final_Delivery02()));
+        Game.contextQueue.Add(new GCQueue(Story_Main.Intro()));
     }
 }
 

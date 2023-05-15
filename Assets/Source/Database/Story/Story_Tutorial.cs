@@ -86,7 +86,12 @@ public static class Story_Tutorial
         q.Add(new GCImage("narrative/hobo".LoadSprite()));
 
         q.Add(new GCNarrative("You encounter a homeless man on the street, his eyes full of wisdom and madness."));
-        q.Add(new GCNarrative("He hands you a stick with a nail sticking out of it."));
+        
+        if (Game.world.inventory.HasItem(ItemDatabase.knife))
+            q.Add(new GCNarrative("He hands you a crowbar coated in rust and dried blood. ."));
+        else
+            q.Add(new GCNarrative("He hands you a stick with a nail sticking out of it."));
+        
         q.Add(new GCNarrative("\"This will be more useful to you than that lying phone of yours,\" he mutters."));
 
         q.Add(new GCNarrative("As you take the stick, he leans in closer and whispers, \"You're already dead, and no one will help you.\""));
@@ -95,7 +100,10 @@ public static class Story_Tutorial
         
         q.Add(new GCNarrative("The homeless man vanishes as mysteriously as he appeared, leaving you to ponder his ominous message."));
 
-        q.Add(new GCAddItem(ItemDatabase.plankOfWood, 1));
+        if (Game.world.inventory.HasItem(ItemDatabase.knife))
+            q.Add(new GCAddItem(ItemDatabase.crowbar, 1));
+        else
+            q.Add(new GCAddItem(ItemDatabase.plankOfWood, 1));
         
         q.Add(new GCImageHide());
         q.Add(new CGUIStateRestore());
